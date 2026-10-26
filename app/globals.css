@@ -47,11 +47,14 @@
    at the top. Same duration and curve as the cards rising into view. Without
    JavaScript and with reduced motion it simply stays the full bar. */
 [data-slot="site-nav"] {
-  /* Pill width and inner padding. Below md and above 1024px the pill spans
-     the screen less its 12px margins (content plus padding is ~295px below
-     md, so it fits from 320px); in between it is capped at 960px (content
-     needs ~683px). Inside, the items sit as in the full bar. */
+  /* Pill width, side margins and inner padding. Below md the pill spans the
+     screen less its 12px margins (content plus padding is ~295px below md,
+     so it fits from 320px); up to 1024px it is capped at 960px (content
+     needs ~683px). Above 1024px it matches the content area of Container
+     (max-w-360 less its px-12 gutters, centered), so it stops growing with
+     wide screens. Inside, the items sit as in the full bar. */
   --nav-compact-width: 100%;
+  --nav-compact-margins: --spacing(6);
   --nav-compact-padding: 1rem;
   transition-property:
     height, max-width, translate, border-width, border-radius, background-color,
@@ -65,7 +68,8 @@
   }
 
   @media (width > 64rem) {
-    --nav-compact-width: 100%;
+    --nav-compact-width: calc(--spacing(360) - --spacing(24));
+    --nav-compact-margins: --spacing(24);
   }
 }
 
@@ -73,10 +77,17 @@
   transition: padding-inline 600ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Set while CompactNavOnScroll applies the state on mount */
+[data-slot="site-nav"][data-instant],
+[data-slot="site-nav"][data-instant] > [data-slot="container"] {
+  transition: none;
+}
+
 [data-slot="site-nav"][data-compact="true"] {
   height: 52px;
-  /* At least 12px from the sides, the same as from the top */
-  max-width: min(var(--nav-compact-width), 100% - --spacing(6));
+  /* Below 1024px at least 12px from the sides, the same as from the top;
+     above it, the Container gutters */
+  max-width: min(var(--nav-compact-width), 100% - var(--nav-compact-margins));
   /* Gap from the top of the viewport. translate, not margin: a margin would
      collapse through the header and shift the whole page while scrolling */
   translate: 0 --spacing(3);
