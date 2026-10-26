@@ -1,9 +1,9 @@
 /* Tailwind, tokens (colors, radius, shadows, fonts) and base styles all come
    from the Design System, so this page never redefines them. */
-@import "../../meu-design-system/app/globals.css";
+@import "../packages/design-system/app/globals.css";
 
 /* Generate the utilities used inside the Design System components too. */
-@source "../../meu-design-system/components";
+@source "../packages/design-system/components";
 
 /* Page-specific motion */
 @theme {

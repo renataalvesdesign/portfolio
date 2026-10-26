@@ -1,16 +1,15 @@
-import path from "node:path"
 import type { NextConfig } from "next"
 
-// The Design System lives next to this project (../meu-design-system) and is
-// imported straight from source through the `@ds/*` alias. Turbopack only
-// resolves files inside its root, so the root is the shared Portfolio folder.
-const portfolioRoot = path.resolve(process.cwd(), "..")
+// Published on GitHub Pages at https://renataalvesdesign.github.io/portfolio/,
+// so production builds live under /portfolio. `next dev` stays at the root.
+const basePath = process.env.NODE_ENV === "production" ? "/portfolio" : ""
 
 const nextConfig: NextConfig = {
-  turbopack: {
-    root: portfolioRoot,
-  },
-  outputFileTracingRoot: portfolioRoot,
+  output: "export",
+  basePath,
+  assetPrefix: basePath,
+  // GitHub Pages has no image optimization server
+  images: { unoptimized: true },
 }
 
 export default nextConfig
