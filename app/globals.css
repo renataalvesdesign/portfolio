@@ -1,0 +1,105 @@
+/* Tailwind, tokens (colors, radius, shadows, fonts) and base styles all come
+   from the Design System, so this page never redefines them. */
+@import "../../meu-design-system/app/globals.css";
+
+/* Generate the utilities used inside the Design System components too. */
+@source "../../meu-design-system/components";
+
+/* Page-specific motion */
+@theme {
+  /* Skills strip: two copies of the list slide by half their width */
+  --animate-marquee: marquee 64s linear infinite;
+  /* Hero: the highlight under "clareza" is drawn left to right */
+  --animate-underline-draw: underline-draw 800ms cubic-bezier(0.22, 1, 0.36, 1)
+    720ms both;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes underline-draw {
+    from {
+      background-size: 0% 0.1em;
+    }
+  }
+}
+
+@layer base {
+  html {
+    @apply motion-safe:scroll-smooth;
+  }
+
+  /* Keep anchored sections clear of the sticky header (h-18). */
+  [id] {
+    @apply scroll-mt-18;
+  }
+
+  /* Sections get focus after an in-page jump (see ScrollLink); no ring there. */
+  [id][tabindex="-1"]:focus {
+    @apply outline-none;
+  }
+}
+
+/* Sticky navigation: once the page scrolls (see CompactNavOnScroll) the
+   full-width bar eases into a floating pill sized to its content, and back
+   at the top. Same duration and curve as the cards rising into view. Without
+   JavaScript and with reduced motion it simply stays the full bar. */
+[data-slot="site-nav"] {
+  /* Pill width and inner padding. Below md and above 1024px the pill spans
+     the screen less its 12px margins (content plus padding is ~295px below
+     md, so it fits from 320px); in between it is capped at 960px (content
+     needs ~683px). Inside, the items sit as in the full bar. */
+  --nav-compact-width: 100%;
+  --nav-compact-padding: 1rem;
+  transition-property:
+    height, max-width, translate, border-width, border-radius, background-color,
+    box-shadow;
+  transition-duration: 600ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+
+  @media (width >= 48rem) {
+    --nav-compact-width: 60rem;
+    --nav-compact-padding: 1.5rem;
+  }
+
+  @media (width > 64rem) {
+    --nav-compact-width: 100%;
+  }
+}
+
+[data-slot="site-nav"] > [data-slot="container"] {
+  transition: padding-inline 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-slot="site-nav"][data-compact="true"] {
+  height: 52px;
+  /* At least 12px from the sides, the same as from the top */
+  max-width: min(var(--nav-compact-width), 100% - --spacing(6));
+  /* Gap from the top of the viewport. translate, not margin: a margin would
+     collapse through the header and shift the whole page while scrolling */
+  translate: 0 --spacing(3);
+  border-width: 1px;
+  /* Same radius as the Design System buttons */
+  border-radius: --theme(--radius-md);
+  background-color: var(--card);
+  box-shadow: --theme(--shadow-lg);
+
+  & > [data-slot="container"] {
+    padding-inline: var(--nav-compact-padding);
+  }
+}
+
+/* Cards that rise into view (see RevealOnScroll). Only elements below the
+   fold get "hidden", and only when the observer is running. */
+[data-reveal="hidden"] {
+  opacity: 0;
+  translate: 0 24px;
+}
+
+[data-reveal="shown"] {
+  transition:
+    opacity 600ms ease-out,
+    translate 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
