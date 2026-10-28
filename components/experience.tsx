@@ -22,7 +22,7 @@ export function Experience({ dict }: { dict: Dictionary["experience"] }) {
           {dict.items.map((job) => (
             <li
               key={`${job.role}-${job.company}`}
-              className="group/row flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 border-t py-4"
+              className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 border-t py-4"
             >
               <div>
                 <h3 className="font-sans text-lg font-semibold">{job.role}</h3>
@@ -30,7 +30,7 @@ export function Experience({ dict }: { dict: Dictionary["experience"] }) {
                   {job.company}
                 </p>
               </div>
-              <p className="text-sm text-muted-foreground transition-colors group-hover/row:text-foreground">
+              <p className="text-sm text-muted-foreground">
                 {job.period}
               </p>
             </li>

@@ -1,10 +1,11 @@
+import Image from "next/image"
 import { ArrowDownIcon } from "lucide-react"
 import { cn } from "cn"
 
 import { Button } from "@ds/components/ui/button"
 import { Container } from "@ds/components/ui/container"
-import { ImagePlaceholder } from "@ds/components/ui/image-placeholder"
 import { Highlight } from "@/components/highlight"
+import profilePhoto from "@/public/images/home/image-profile-ra.jpg"
 import { ScrollLink } from "@/components/scroll-link"
 import type { Dictionary } from "@/dictionaries/pt"
 import type { Locale } from "@/lib/i18n"
@@ -50,9 +51,14 @@ export function Hero({
             <div
               className={cn(enter, "mt-7 flex items-center gap-4 delay-140")}
             >
-              <ImagePlaceholder
+              {/* Above the fold, so it loads right away. The crop sits a
+                  little above center to keep the face in the circle. */}
+              <Image
+                src={profilePhoto}
                 alt={dict.photoAlt}
-                className="size-14 shrink-0 rounded-full ring-2 ring-foreground/40"
+                sizes="56px"
+                preload
+                className="size-14 shrink-0 rounded-full object-cover object-[50%_35%] ring-2 ring-foreground/40"
               />
               <div>
                 <p className="font-heading text-lg font-bold">{dict.name}</p>

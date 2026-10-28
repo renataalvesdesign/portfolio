@@ -22,7 +22,7 @@ export default async function Page() {
       {/* Body content may not be translated yet; mark its real language */}
       <main lang={dict.contentLang}>
         <Hero dict={dict.hero} titleLang={locale} />
-        <Cases dict={dict.cases} placeholderLabel={dict.placeholder.image} />
+        <Cases dict={dict.cases} />
         <Process dict={dict.process} />
         <SkillsStrip dict={dict.skills} />
         <Experience dict={dict.experience} />

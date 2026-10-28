@@ -181,9 +181,6 @@ const pt = {
     backToTop: "Voltar ao topo",
     copyright: "© 2026 Renata Alves",
   },
-  placeholder: {
-    image: "Imagem em breve",
-  },
 }
 
 export type Dictionary = typeof pt

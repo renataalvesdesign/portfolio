@@ -180,9 +180,6 @@ const en: Dictionary = {
     backToTop: "Back to top",
     copyright: "© 2026 Renata Alves",
   },
-  placeholder: {
-    image: "Image coming soon",
-  },
 }
 
 export default en

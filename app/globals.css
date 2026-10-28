@@ -50,9 +50,11 @@
   /* Pill width, side margins and inner padding. Below md the pill spans the
      screen less its 12px margins (content plus padding is ~295px below md,
      so it fits from 320px); up to 1024px it is capped at 960px (content
-     needs ~683px). Above 1024px it matches the content area of Container
-     (max-w-360 less its px-12 gutters, centered), so it stops growing with
-     wide screens. Inside, the items sit as in the full bar. */
+     needs ~683px). Above 1024px it is the content area of Container
+     (max-w-360 less its px-12 gutters, centered) plus 24px on each side,
+     so it stops growing with wide screens and keeps 24px (half the gutter)
+     from the screen edges near the breakpoint. Inside, the items sit as in
+     the full bar. */
   --nav-compact-width: 100%;
   --nav-compact-margins: --spacing(6);
   --nav-compact-padding: 1rem;
@@ -68,8 +70,8 @@
   }
 
   @media (width > 64rem) {
-    --nav-compact-width: calc(--spacing(360) - --spacing(24));
-    --nav-compact-margins: --spacing(24);
+    --nav-compact-width: calc(--spacing(360) - --spacing(24) + --spacing(12));
+    --nav-compact-margins: calc(--spacing(24) - --spacing(12));
   }
 }
 

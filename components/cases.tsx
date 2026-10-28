@@ -1,23 +1,23 @@
+import Image, { type StaticImageData } from "next/image"
 import { ArrowRightIcon } from "lucide-react"
 import { cn } from "cn"
 
 import { Badge } from "@ds/components/ui/badge"
 import { Button } from "@ds/components/ui/button"
 import { Container } from "@ds/components/ui/container"
-import { ImagePlaceholder } from "@ds/components/ui/image-placeholder"
 import { CaseCarousel } from "@/components/case-carousel"
 import type { Dictionary } from "@/dictionaries/pt"
 import { site } from "@/lib/site"
+import coverSegmentation from "@/public/images/home/capa-01-editor-segmentacao.png"
+import coverBusinessAccount from "@/public/images/home/capa-02-abertura-conta-pj.png"
+import coverMenuFooter from "@/public/images/home/capa-03-menu-footer-xp.png"
 
 type CaseItem = Dictionary["cases"]["items"][number]
 
-export function Cases({
-  dict,
-  placeholderLabel,
-}: {
-  dict: Dictionary["cases"]
-  placeholderLabel: string
-}) {
+// Same order as dict.items
+const caseCovers = [coverSegmentation, coverBusinessAccount, coverMenuFooter]
+
+export function Cases({ dict }: { dict: Dictionary["cases"] }) {
   return (
     <section id="projetos" className="border-t">
       <Container className="pt-16 pb-32">
@@ -38,9 +38,9 @@ export function Cases({
               key={item.number}
               item={item}
               href={site.caseUrls[index] ?? "#"}
+              cover={caseCovers[index]}
               featured={index === 0}
               viewCase={dict.viewCase}
-              placeholderLabel={placeholderLabel}
             />
           ))}
         </CaseCarousel>
@@ -52,15 +52,15 @@ export function Cases({
 function CaseCard({
   item,
   href,
+  cover,
   viewCase,
-  placeholderLabel,
   featured = false,
   className,
 }: {
   item: CaseItem
   href: string
+  cover: StaticImageData
   viewCase: string
-  placeholderLabel: string
   featured?: boolean
   className?: string
 }) {
@@ -93,11 +93,16 @@ function CaseCard({
       >
         {/* In the carousel (below 1024px) every case uses the shorter
             660/340 frame, so the featured image is a little lower there */}
-        <ImagePlaceholder
+        <Image
+          src={cover}
           alt={item.imageAlt}
-          label={placeholderLabel}
+          sizes={
+            featured
+              ? "(min-width: 1024px) 50vw, 100vw"
+              : "(min-width: 1024px) 33vw, 100vw"
+          }
           className={cn(
-            "aspect-660/340 transition-transform duration-500 ease-out group-hover:scale-103 group-has-focus-visible:scale-103 motion-reduce:transition-none",
+            "aspect-660/340 w-full object-cover transition-transform duration-500 ease-out group-hover:scale-103 group-has-focus-visible:scale-103 motion-reduce:transition-none",
             featured && "lg:aspect-660/420"
           )}
         />
