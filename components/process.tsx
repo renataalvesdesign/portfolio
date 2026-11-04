@@ -10,11 +10,11 @@ export function Process({ dict }: { dict: Dictionary["process"] }) {
   return (
     <section id="sobre" className="surface-light">
       <Container className="py-28">
-        <div className="grid items-start gap-x-6 gap-y-6 lg:grid-cols-12">
+        <div className="grid items-baseline gap-x-6 gap-y-6 lg:grid-cols-12">
           <h2 className="text-4xl font-bold tracking-tight md:text-5xl lg:col-span-5">
             {dict.title}
           </h2>
-          <p className="font-heading text-3xl leading-tight font-bold tracking-tight md:text-4xl lg:col-span-7 lg:col-start-6">
+          <p className="text-section-lead lg:col-span-7 lg:col-start-6">
             {dict.lead}
           </p>
         </div>

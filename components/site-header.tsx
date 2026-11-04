@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { ArrowUpRightIcon } from "lucide-react"
 import { cn } from "cn"
 
@@ -18,22 +19,32 @@ import { LanguageToggle } from "@/components/language-toggle"
 import { MobileNav } from "@/components/mobile-nav"
 import type { Dictionary } from "@/dictionaries/pt"
 import type { Locale } from "@/lib/i18n"
-import { isPending, site } from "@/lib/site"
+import { isPending, paths, site, type Page } from "@/lib/site"
 
-// Text link with a 2px underline that grows from the left on hover, focus and touch.
+// Text link with a 2px underline that grows from the left on hover, focus and
+// touch. On the current page the underline stays drawn.
 const underlineLink =
-  "relative rounded-none px-0 py-2.5 font-medium hover:bg-transparent focus:bg-transparent after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-current after:transition-transform hover:after:scale-x-100 focus-visible:after:scale-x-100 active:after:scale-x-100 motion-reduce:after:transition-none"
+  "relative rounded-none px-0 py-2.5 font-medium hover:bg-transparent focus:bg-transparent data-active:bg-transparent data-active:hover:bg-transparent data-active:focus:bg-transparent after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-current after:transition-transform hover:after:scale-x-100 focus-visible:after:scale-x-100 active:after:scale-x-100 data-active:after:scale-x-100 motion-reduce:after:transition-none"
 
 export function SiteHeader({
   dict,
   locale,
+  page,
 }: {
   dict: Dictionary
   locale: Locale
+  page: Page
 }) {
+  // In-page anchors on the home page; elsewhere they lead back to it.
+  // The contact section is the footer of every page.
+  const home = page === "home" ? "" : paths.home(locale)
   const links = [
-    { href: "#projetos", label: dict.nav.projects },
-    { href: site.aboutUrl, label: dict.nav.about },
+    { href: `${home}#projetos`, label: dict.nav.projects },
+    {
+      href: paths.about(locale),
+      label: dict.nav.about,
+      current: page === "about",
+    },
     { href: "#contato", label: dict.nav.contact },
   ]
   const linkedinPending = isPending(site.linkedinUrl)
@@ -65,12 +76,14 @@ export function SiteHeader({
         className="relative mx-auto h-18 max-w-full border-b bg-background"
       >
         <Container className="flex h-full items-center justify-between gap-4 md:gap-7">
-          <a
-            href="#top"
-            className="font-heading text-xl font-bold whitespace-nowrap"
+          {/* Focus ring in the solid --ring color (the base outline is ring/50,
+              under 3:1 on navy); rounded-sm only shapes that ring */}
+          <Link
+            href={page === "home" ? "#top" : paths.home(locale)}
+            className="rounded-sm font-heading text-xl font-bold whitespace-nowrap outline-offset-4 focus-visible:outline-2 focus-visible:outline-ring"
           >
             Renata Alves
-          </a>
+          </Link>
 
           <NavigationMenu
             viewport={false}
@@ -81,10 +94,11 @@ export function SiteHeader({
               {links.map((link) => (
                 <NavigationMenuItem key={link.label}>
                   <NavigationMenuLink
-                    href={link.href}
+                    asChild
+                    active={link.current}
                     className={underlineLink}
                   >
-                    {link.label}
+                    <Link href={link.href}>{link.label}</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}

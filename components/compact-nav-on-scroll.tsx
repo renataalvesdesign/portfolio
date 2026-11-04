@@ -11,7 +11,9 @@ const EXPAND_BEFORE = 24
 // eases into the floating pill (see globals.css). With reduced motion, and
 // without JavaScript, it stays the full bar.
 export function CompactNavOnScroll() {
-  React.useEffect(() => {
+  // Layout effect: the header remounts when the language changes, and the new
+  // bar must already be compact in its first painted frame
+  React.useLayoutEffect(() => {
     const nav = document.querySelector<HTMLElement>('[data-slot="site-nav"]')
     if (!nav || window.matchMedia("(prefers-reduced-motion: reduce)").matches)
       return
@@ -24,7 +26,12 @@ export function CompactNavOnScroll() {
       nav.dataset.compact = String(compact)
     }
 
+    // The state on mount (page load, language change) is applied without the
+    // transition; only scrolling animates it
+    nav.dataset.instant = ""
     update()
+    void nav.offsetHeight
+    delete nav.dataset.instant
     window.addEventListener("scroll", update, { passive: true })
     return () => {
       window.removeEventListener("scroll", update)

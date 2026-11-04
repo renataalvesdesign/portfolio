@@ -6,6 +6,7 @@ import { Process } from "@/components/process"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { SiteHeader } from "@/components/site-header"
 import { SkillsStrip } from "@/components/skills-strip"
+import { paths } from "@/lib/site"
 import { getDictionary, getLocale } from "./dictionaries"
 
 export default async function Page() {
@@ -18,14 +19,17 @@ export default async function Page() {
           {dict.translationNotice}
         </p>
       )}
-      <SiteHeader dict={dict} locale={locale} />
+      <SiteHeader dict={dict} locale={locale} page="home" />
       {/* Body content may not be translated yet; mark its real language */}
       <main lang={dict.contentLang}>
         <Hero dict={dict.hero} titleLang={locale} />
-        <Cases dict={dict.cases} placeholderLabel={dict.placeholder.image} />
+        <Cases dict={dict.cases} />
         <Process dict={dict.process} />
         <SkillsStrip dict={dict.skills} />
-        <Experience dict={dict.experience} />
+        <Experience
+          dict={dict.experience}
+          historyHref={`${paths.about(locale)}#experiencia`}
+        />
       </main>
       <Contact dict={dict.contact} links={dict.links} lang={dict.contentLang} />
       <RevealOnScroll />

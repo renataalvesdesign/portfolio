@@ -1,12 +1,22 @@
+import type { Locale } from "@/lib/i18n"
+
 // Data that does not change between languages.
 // TODO: replace the "#" placeholders once the final links are available
-// (aboutUrl → Sobre page, caseUrls → Case pages).
+// (caseUrls → Case pages, resumeUrl → résumé file).
 export const site = {
   email: "renaataa.alves@hotmail.com",
   linkedinUrl: "https://www.linkedin.com/in/renaataalves/",
-  aboutUrl: "#",
+  resumeUrl: "#",
   caseUrls: ["#", "#", "#"],
   cookiePreferencesUrl: "#",
 }
 
 export const isPending = (url: string) => url === "#"
+
+// Page routes. Link them with next/link, which adds the base path.
+export const paths = {
+  home: (locale: Locale) => `/${locale}`,
+  about: (locale: Locale) => `/${locale}/sobre`,
+}
+
+export type Page = keyof typeof paths

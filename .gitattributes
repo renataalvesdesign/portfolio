@@ -1,0 +1,2 @@
+# Line endings: LF everywhere, to match Prettier (endOfLine: "lf")
+* text=auto eol=lf

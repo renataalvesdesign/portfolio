@@ -1,17 +1,18 @@
 import { ArrowDownIcon } from "lucide-react"
 import { cn } from "cn"
+import { preload } from "react-dom"
 
 import { Button } from "@ds/components/ui/button"
 import { Container } from "@ds/components/ui/container"
-import { ImagePlaceholder } from "@ds/components/ui/image-placeholder"
 import { Highlight } from "@/components/highlight"
+import photo136 from "@/public/images/home/image-profile-ra-136.jpg"
+import photo204 from "@/public/images/home/image-profile-ra-204.jpg"
+import photo272 from "@/public/images/home/image-profile-ra-272.jpg"
+import photo408 from "@/public/images/home/image-profile-ra-408.jpg"
 import { ScrollLink } from "@/components/scroll-link"
 import type { Dictionary } from "@/dictionaries/pt"
 import type { Locale } from "@/lib/i18n"
-
-// Entrance: rise and fade in over 420ms; delays are set per element
-const enter =
-  "animate-in fade-in slide-in-from-bottom-4 animation-duration-420 ease-out fill-mode-both motion-reduce:animate-none"
+import { enter } from "@/lib/motion"
 
 export function Hero({
   dict,
@@ -20,6 +21,15 @@ export function Hero({
   dict: Dictionary["hero"]
   titleLang: Locale
 }) {
+  // Square crops of image-profile-ra.jpg (face a little above center) for the
+  // 68px avatar. Each screen density gets about twice its own pixels: Chrome
+  // paints a photo this small softer at its exact size than when it shrinks
+  // it 2:1. The static export has no image optimizer, so next/image would
+  // send the full photo instead, shrunk ~30x in one step, which aliases.
+  const photoSrcSet = `${photo136.src} 1x, ${photo204.src} 1.5x, ${photo272.src} 2x, ${photo408.src} 3x`
+  // Above the fold, so it loads right away
+  preload(photo136.src, { as: "image", imageSrcSet: photoSrcSet })
+
   return (
     <section id="top">
       <Container className="pt-12 pb-14">
@@ -48,11 +58,23 @@ export function Hero({
             </p>
             {/* Informative only: not a link */}
             <div
-              className={cn(enter, "mt-7 flex items-center gap-4 delay-140")}
+              className={cn(
+                enter,
+                // No fill after the entrance: a leftover transform puts the
+                // row on its own layer at a fractional offset, blurring the photo
+                "mt-7 flex items-center gap-4 delay-140 fill-mode-backwards!"
+              )}
             >
-              <ImagePlaceholder
+              {/* eslint-disable-next-line @next/next/no-img-element -- next/image cannot emit a srcset without the optimizer */}
+              <img
+                src={photo136.src}
+                srcSet={photoSrcSet}
                 alt={dict.photoAlt}
-                className="size-14 shrink-0 rounded-full ring-2 ring-foreground/40"
+                width={68}
+                height={68}
+                fetchPriority="high"
+                decoding="async"
+                className="size-17 shrink-0 rounded-full object-cover ring-2 ring-foreground/40"
               />
               <div>
                 <p className="font-heading text-lg font-bold">{dict.name}</p>

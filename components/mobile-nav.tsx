@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { ArrowUpRightIcon, MenuIcon, XIcon } from "lucide-react"
 
 import { Button } from "@ds/components/ui/button"
@@ -18,7 +19,7 @@ import {
 import type { Dictionary } from "@/dictionaries/pt"
 
 const panelLink =
-  "min-h-12 px-3 text-base font-medium active:bg-muted [&_svg:not([class*='size-'])]:size-3.5"
+  "min-h-12 px-3 text-base font-medium active:bg-muted data-active:bg-muted/50 [&_svg:not([class*='size-'])]:size-3.5"
 
 // Small screens only: a disclosure button that shows the desktop links in a
 // panel under the bar. It closes from the button, on Escape, when a link is
@@ -29,7 +30,7 @@ export function MobileNav({
   linkedinPending,
   labels,
 }: {
-  links: { href: string; label: string }[]
+  links: { href: string; label: string; current?: boolean }[]
   linkedinUrl: string
   linkedinPending: boolean
   labels: Pick<Dictionary, "nav" | "links">
@@ -124,11 +125,12 @@ export function MobileNav({
             {links.map((link) => (
               <NavigationMenuItem key={link.label}>
                 <NavigationMenuLink
-                  href={link.href}
+                  asChild
+                  active={link.current}
                   onClick={close}
                   className={panelLink}
                 >
-                  {link.label}
+                  <Link href={link.href}>{link.label}</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             ))}
