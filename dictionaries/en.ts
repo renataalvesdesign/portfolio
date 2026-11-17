@@ -49,45 +49,6 @@ const en: Dictionary = {
       next: "Next case",
       position: "{current} of {total}",
     },
-    items: [
-      {
-        number: "01",
-        company: "TOTVS | RD Station",
-        year: "2024",
-        title: "Lead Segmentation",
-        description:
-          "The segmentation editor was the third most-visited page in RD Marketing, but its legacy architecture made every new use case costly to ship. I redesigned the editor alongside engineering’s restructuring, which enabled features like relative date filters.",
-        role: "Design owner, from discovery to post-launch stabilization · with PM, Engineering and Support",
-        tags: ["User interviews", "Prioritization", "Post-launch monitoring"],
-        imageAlt: "Segmentation — editor screen",
-      },
-      {
-        number: "02",
-        company: "XP Inc.",
-        year: "2023",
-        title: "Business account opening",
-        description:
-          "Account opening spanned five departments, with broken handoffs and an undocumented journey. I supported the journey mapping and designed the document upload flow, with real-time status. Early signs: less manual work for internal teams.",
-        role: "Design owner, from discovery to handoff · with UX Research, PM and stakeholders",
-        tags: [
-          "Journey mapping",
-          "Stakeholder interviews",
-          "Service blueprint",
-        ],
-        imageAlt: "Business account opening — desktop and mobile flow",
-      },
-      {
-        number: "03",
-        company: "XP Inc.",
-        year: "2022",
-        title: "XP Menu and Footer",
-        description:
-          "XP’s site was built for a brokerage and couldn’t support a bank. The brief was two one-off deliverables; I proposed rethinking the entire navigation, and the PM approved prioritizing it on the half-year roadmap. Validated with tree testing, the structure became the standard for XP, Rico and Clear.",
-        role: "Design owner, from discovery to handoff · with PM, UX Writing, SEO and Design Ops",
-        tags: ["Information architecture", "Card sorting", "Design system"],
-        imageAlt: "XP Menu and Footer — screens of the menu and footer",
-      },
-    ],
   },
   process: {
     title: "How I get to clarity",
@@ -180,47 +141,30 @@ const en: Dictionary = {
     },
     eyebrow: "Projects",
     title: "A selection of projects I’ve worked on throughout my career",
-    casesTitle: "Martech and fintech",
-    groups: [
-      {
-        title: "E-commerce",
-        items: [
-          {
-            number: "04",
-            company: "Profit-e E-commerce Solutions",
-            year: "2018",
-            title: "Vacinas.net: Online Vaccine Store",
-            description:
-              "Vaccines aren’t bought like any other product: the decision depends more on trust than on price. In a Design Sprint with the client, we arrived at navigation built around the vaccination schedule and a product page that answers questions before it sells.",
-            role: "Designer on the project team, from discovery to final delivery · with Design Lead and Senior UI Designer",
-            tags: ["Design Sprint", "Information architecture", "Prototyping"],
-            imageAlt: "Vacinas.net: Online Vaccine Store — project image",
-          },
-          {
-            number: "05",
-            company: "Profit-e E-commerce Solutions",
-            year: "2018",
-            title: "A Nossa Drogaria",
-            description:
-              "A Nossa Drogaria wanted to bring the closeness it already had in its physical stores to digital. Based on field research and benchmarking, I set the visual direction: blue became the main color, and the brand’s yellow, which hurt legibility, was kept for action highlights.",
-            role: "Design owner, from discovery to final delivery · with Project Manager and Development",
-            tags: ["Field research", "Visual direction", "Design System"],
-            imageAlt: "A Nossa Drogaria — project image",
-          },
-          {
-            number: "06",
-            company: "Profit-e E-commerce Solutions",
-            year: "2018",
-            title: "Mahogany e-commerce redesign",
-            description:
-              "On Mahogany’s e-commerce, mobile drove most of the traffic, but price and the buy button sat below the fold. Using click and scroll data, I redesigned the experience with a sticky buy button, price visible upfront, and category shortcuts on the home page.",
-            role: "Design owner, from kickoff to final delivery · with Project Manager and Development",
-            tags: ["Data analysis", "Responsive design", "Design System"],
-            imageAlt: "Mahogany e-commerce redesign — project image",
-          },
-        ],
-      },
-    ],
+    groupTitles: {
+      selected: "Martech and fintech",
+      ecommerce: "E-commerce",
+    },
+  },
+  caseStudy: {
+    eyebrow: "Case study",
+    role: "Role",
+    reading: "Reading time",
+    readingPlaceholder: "00 minutes",
+    skills: {
+      label: "Project skills",
+      more: "Show {n} more skills",
+      collapse: "Show less",
+      placeholder: "Skill to be added",
+    },
+    toc: "In this case",
+    imagePending: "Image to be added",
+    contentPending:
+      "This case study is still being written. In the meantime, see the summary above or the other projects.",
+    otherLanguage: "This case study is only available in Portuguese for now.",
+    otherCases: "Other case studies",
+    previous: "Previous",
+    next: "Next",
   },
   about: {
     meta: {
@@ -254,7 +198,7 @@ const en: Dictionary = {
           description: [
             "I designed and evolved experiences for contact management, segmentation, data imports, and tags, partnering with Product and Engineering teams. I led discovery initiatives and monitored customer churn to inform prioritization. Beyond my team, I facilitated a card sorting exercise with Marketing teams to help improve RD Station Marketing's navigation and explored AI-powered experiences for the Landing Page editor. I also conducted design reviews of other designers' work and contributed to the evolution of the Design System.",
           ],
-          cases: [0],
+          cases: ["segmentacao-de-leads"],
           focus: [
             "Contact management",
             "Product discovery",
@@ -293,7 +237,7 @@ const en: Dictionary = {
           description: [
             "I designed experiences spanning acquisition, account opening, and activation across XP Investimentos, Rico, and Clear, collaborating with Product, Engineering, and UX Research teams. I planned and conducted A/B tests and used acquisition and conversion metrics to inform design decisions. I also created reusable component templates that enabled non-technical teams to build pages in WordPress and contributed to interface standardization.",
           ],
-          cases: [1, 2],
+          cases: ["abertura-de-conta-pj", "menu-e-footer-xp"],
           focus: [
             "A/B testing",
             "Conversion metrics",
