@@ -1,19 +1,23 @@
-import { ArrowUpIcon } from "lucide-react"
+import Link from "next/link"
+import { ArrowRightIcon } from "lucide-react"
 
 import { Button } from "@ds/components/ui/button"
 import { Container } from "@ds/components/ui/container"
 import { ProcessSteps } from "@/components/process-steps"
-import { ScrollLink } from "@/components/scroll-link"
 import type { Dictionary } from "@/dictionaries/pt"
 
-export function Process({ dict }: { dict: Dictionary["process"] }) {
+export function Process({
+  dict,
+  projectsHref,
+}: {
+  dict: Dictionary["process"]
+  projectsHref: string
+}) {
   return (
     <section id="sobre" className="surface-light">
       <Container className="py-28">
         <div className="grid items-baseline gap-x-6 gap-y-6 lg:grid-cols-12">
-          <h2 className="text-4xl font-bold tracking-tight md:text-5xl lg:col-span-5">
-            {dict.title}
-          </h2>
+          <h2 className="text-section-title lg:col-span-5">{dict.title}</h2>
           <p className="text-section-lead lg:col-span-7 lg:col-start-6">
             {dict.lead}
           </p>
@@ -28,14 +32,14 @@ export function Process({ dict }: { dict: Dictionary["process"] }) {
             variant="link"
             className="h-auto px-0 text-base font-semibold"
           >
-            <ScrollLink href="#projetos">
+            <Link href={projectsHref}>
               {dict.seeInProjects}
-              <ArrowUpIcon
+              <ArrowRightIcon
                 data-icon="inline-end"
                 aria-hidden
-                className="transition-transform group-hover/button:-translate-y-[3px] group-focus-visible/button:-translate-y-[3px] motion-reduce:transition-none"
+                className="transition-transform group-hover/button:translate-x-[3px] group-focus-visible/button:translate-x-[3px] motion-reduce:transition-none"
               />
-            </ScrollLink>
+            </Link>
           </Button>
         </div>
       </Container>

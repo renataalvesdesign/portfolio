@@ -24,7 +24,7 @@ export default async function Page() {
       <main lang={dict.contentLang}>
         <Hero dict={dict.hero} titleLang={locale} />
         <Cases dict={dict.cases} />
-        <Process dict={dict.process} />
+        <Process dict={dict.process} projectsHref={paths.projects(locale)} />
         <SkillsStrip dict={dict.skills} />
         <Experience
           dict={dict.experience}

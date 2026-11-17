@@ -593,6 +593,13 @@ export default function StyleguidePage() {
                 <TokenName>text-xl</TokenName>
               </div>
               <div>
+                <h2 className="text-section-title">Section title</h2>
+                <TokenName>
+                  text-section-title · 36px, 48px from md up, 700,
+                  tracking-tight. The h2 that opens a page section.
+                </TokenName>
+              </div>
+              <div>
                 <p className="text-section-lead">
                   Section lead: the subtitle beside a section title.
                 </p>

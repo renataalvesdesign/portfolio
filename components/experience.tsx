@@ -16,9 +16,7 @@ export function Experience({
     <section className="bg-card text-card-foreground">
       <Container className="py-26">
         <div className="grid items-baseline gap-x-6 gap-y-4 lg:grid-cols-12">
-          <h2 className="text-4xl font-bold tracking-tight md:text-5xl lg:col-span-5">
-            {dict.title}
-          </h2>
+          <h2 className="text-section-title lg:col-span-5">{dict.title}</h2>
           {/* From lg up the lead is set flush right, to the page margin */}
           <p className="text-section-lead lg:col-span-7 lg:col-start-6 lg:text-right">
             {dict.lead}

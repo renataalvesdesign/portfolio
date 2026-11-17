@@ -31,10 +31,7 @@ export function CareerTimeline({
   return (
     <section id="experiencia" aria-labelledby="experiencia-title">
       <Container className="pt-26 pb-14">
-        <h2
-          id="experiencia-title"
-          className="text-4xl font-bold tracking-tight md:text-5xl"
-        >
+        <h2 id="experiencia-title" className="text-section-title">
           {dict.title}
         </h2>
 

@@ -18,7 +18,7 @@ export function Competencies({
         <div className="grid items-baseline gap-x-6 gap-y-4 lg:grid-cols-12">
           <h2
             id="competencias-title"
-            className="text-4xl font-bold tracking-tight md:text-5xl lg:col-span-5"
+            className="text-section-title lg:col-span-5"
           >
             {dict.title}
           </h2>

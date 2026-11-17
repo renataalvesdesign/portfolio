@@ -35,10 +35,7 @@ export function Cases({ dict }: { dict: Dictionary["cases"] }) {
   return (
     <section id="projetos" className="border-t">
       <Container className="pt-16 pb-32">
-        <h2
-          id="projetos-title"
-          className="text-4xl font-bold tracking-tight md:text-5xl"
-        >
+        <h2 id="projetos-title" className="text-section-title">
           {dict.title}
         </h2>
 

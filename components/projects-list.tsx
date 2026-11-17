@@ -66,10 +66,7 @@ export function ProjectsList({
               className="mt-28"
             >
               {/* Same size as the section titles of the other pages */}
-              <h2
-                id={titleId}
-                className="text-4xl font-bold tracking-tight md:text-5xl"
-              >
+              <h2 id={titleId} className="text-section-title">
                 {group.title}
               </h2>
               <CaseGrid

@@ -255,6 +255,12 @@
   }
 }
 
+/* Section title: the h2 that opens a page section. One style for every
+   section: 36px, 48px from md up, 700, tracking-tight. */
+@utility text-section-title {
+  @apply font-heading text-4xl font-bold tracking-tight md:text-5xl;
+}
+
 /* Section lead: the subtitle beside a section title (h2). One style for every
    section; next to the title it sits on the title's baseline. */
 @utility text-section-lead {

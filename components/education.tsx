@@ -30,10 +30,7 @@ export function Education({
       <Container className="pb-28">
         <div className="grid items-start gap-x-6 gap-y-10 border-t pt-14 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <h2
-              id="formacao-title"
-              className="text-4xl font-bold tracking-tight md:text-5xl"
-            >
+            <h2 id="formacao-title" className="text-section-title">
               {dict.title}
             </h2>
           </div>
