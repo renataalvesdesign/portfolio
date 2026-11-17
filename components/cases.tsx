@@ -5,17 +5,31 @@ import { cn } from "cn"
 import { Badge } from "@ds/components/ui/badge"
 import { Button } from "@ds/components/ui/button"
 import { Container } from "@ds/components/ui/container"
+import { ImagePlaceholder } from "@ds/components/ui/image-placeholder"
 import { CaseCarousel } from "@/components/case-carousel"
 import type { Dictionary } from "@/dictionaries/pt"
+import { caseCovers } from "@/lib/cases"
 import { site } from "@/lib/site"
-import coverSegmentation from "@/public/images/home/capa-01-editor-segmentacao.png"
-import coverBusinessAccount from "@/public/images/home/capa-02-abertura-conta-pj.png"
-import coverMenuFooter from "@/public/images/home/capa-03-menu-footer-xp.png"
 
 type CaseItem = Dictionary["cases"]["items"][number]
 
-// Same order as dict.items
-const caseCovers = [coverSegmentation, coverBusinessAccount, coverMenuFooter]
+// Classes that line a card's 7 rows up with its neighbour's through subgrid.
+// The parent grid spans each card over 7 rows from the same breakpoint: lg on
+// the Home (CaseCarousel), md on the Projects page (ProjectsList).
+const subgridClasses = {
+  lg: {
+    card: "lg:row-span-7 lg:grid lg:grid-rows-subgrid lg:items-start",
+    text: "lg:contents",
+    meta: "lg:mt-6",
+    link: "lg:justify-self-start",
+  },
+  md: {
+    card: "md:row-span-7 md:grid md:grid-rows-subgrid md:items-start",
+    text: "md:contents",
+    meta: "md:mt-6",
+    link: "md:justify-self-start",
+  },
+}
 
 export function Cases({ dict }: { dict: Dictionary["cases"] }) {
   return (
@@ -49,21 +63,35 @@ export function Cases({ dict }: { dict: Dictionary["cases"] }) {
   )
 }
 
-function CaseCard({
+export function CaseCard({
   item,
   href,
   cover,
   viewCase,
   featured = false,
+  subgridFrom = "lg",
+  imageClassName,
   className,
 }: {
   item: CaseItem
   href: string
-  cover: StaticImageData
+  /** Missing while the case has no cover yet: shows a placeholder */
+  cover?: StaticImageData
   viewCase: string
   featured?: boolean
+  /** Breakpoint from which a non-featured card is a 7-row subgrid */
+  subgridFrom?: keyof typeof subgridClasses
+  /** Overrides the cover frame, e.g. a fixed height instead of the ratio */
+  imageClassName?: string
   className?: string
 }) {
+  const subgrid = subgridClasses[subgridFrom]
+  const coverClassName = cn(
+    "aspect-660/340 w-full object-cover transition-transform duration-500 ease-out group-hover:scale-103 group-has-focus-visible:scale-103 motion-reduce:transition-none",
+    featured && "lg:aspect-660/420",
+    imageClassName
+  )
+
   return (
     // The "Ver case" link stretches over the whole card (its ::after), so the
     // card is a single link target. The frame shows on hover (pointer devices
@@ -79,9 +107,7 @@ function CaseCard({
       data-reveal=""
       className={cn(
         "group relative isolate before:absolute before:-inset-4 before:-z-10 before:rounded-2xl before:bg-card before:opacity-0 before:transition-opacity hover:before:opacity-100 active:before:opacity-100 has-focus-visible:before:opacity-100 motion-reduce:before:transition-none",
-        featured
-          ? "grid items-center gap-6 lg:grid-cols-12"
-          : "lg:row-span-7 lg:grid lg:grid-rows-subgrid lg:items-start",
+        featured ? "grid items-center gap-6 lg:grid-cols-12" : subgrid.card,
         className
       )}
     >
@@ -92,28 +118,31 @@ function CaseCard({
         )}
       >
         {/* In the carousel (below 1024px) every case uses the shorter
-            660/340 frame, so the featured image is a little lower there */}
-        <Image
-          src={cover}
-          alt={item.imageAlt}
-          sizes={
-            featured
-              ? "(min-width: 1024px) 50vw, 100vw"
-              : "(min-width: 1024px) 33vw, 100vw"
-          }
-          className={cn(
-            "aspect-660/340 w-full object-cover transition-transform duration-500 ease-out group-hover:scale-103 group-has-focus-visible:scale-103 motion-reduce:transition-none",
-            featured && "lg:aspect-660/420"
-          )}
-        />
+            660/340 frame, so the featured image is a little lower there.
+            Without a cover yet, the Design System placeholder fills the
+            same frame. */}
+        {cover ? (
+          <Image
+            src={cover}
+            alt={item.imageAlt}
+            sizes={
+              featured
+                ? "(min-width: 1024px) 50vw, 100vw"
+                : "(min-width: 1024px) 33vw, 100vw"
+            }
+            className={coverClassName}
+          />
+        ) : (
+          <ImagePlaceholder alt={item.imageAlt} className={coverClassName} />
+        )}
       </div>
 
-      <div className={cn(featured ? "lg:col-span-6" : "mt-6 lg:contents")}>
+      <div className={cn(featured ? "lg:col-span-6" : ["mt-6", subgrid.text])}>
         <p
           className={cn(
             "flex flex-wrap items-baseline gap-x-2.5 text-sm text-muted-foreground",
             // The wrapper's mt-6, which display: contents drops
-            !featured && "lg:mt-6"
+            !featured && subgrid.meta
           )}
         >
           <span className="font-semibold text-foreground">{item.number}</span>
@@ -144,7 +173,7 @@ function CaseCard({
           className={cn(
             "mt-5.5 h-auto px-0 text-base font-semibold group-hover:underline after:absolute after:-inset-4 after:rounded-2xl",
             // Keeps its own width in the card's grid row
-            !featured && "lg:justify-self-start"
+            !featured && subgrid.link
           )}
         >
           <a href={href}>

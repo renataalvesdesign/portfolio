@@ -35,11 +35,13 @@ export function SiteHeader({
   locale: Locale
   page: Page
 }) {
-  // In-page anchors on the home page; elsewhere they lead back to it.
   // The contact section is the footer of every page.
-  const home = page === "home" ? "" : paths.home(locale)
   const links = [
-    { href: `${home}#projetos`, label: dict.nav.projects },
+    {
+      href: paths.projects(locale),
+      label: dict.nav.projects,
+      current: page === "projects",
+    },
     {
       href: paths.about(locale),
       label: dict.nav.about,

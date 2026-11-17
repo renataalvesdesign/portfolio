@@ -8,6 +8,8 @@ export const site = {
   linkedinUrl: "https://www.linkedin.com/in/renaataalves/",
   resumeUrl: "#",
   caseUrls: ["#", "#", "#"],
+  // Projects page groups (projects.groups), by case number; "#" if missing
+  projectUrls: {} as Partial<Record<string, string>>,
   cookiePreferencesUrl: "#",
 }
 
@@ -17,6 +19,7 @@ export const isPending = (url: string) => url === "#"
 export const paths = {
   home: (locale: Locale) => `/${locale}`,
   about: (locale: Locale) => `/${locale}/sobre`,
+  projects: (locale: Locale) => `/${locale}/projetos`,
 }
 
 export type Page = keyof typeof paths

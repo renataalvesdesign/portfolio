@@ -16,6 +16,25 @@ type Course = {
   placeholder?: boolean
 }
 
+// A case shown only on the Projects page; same fields as cases.items.
+// Its cover and link are looked up by number (lib/cases.ts, lib/site.ts).
+type ProjectItem = {
+  number: string
+  company: string
+  year: string
+  title: string
+  description: string
+  role: string
+  tags: string[]
+  imageAlt: string
+  placeholder?: boolean
+}
+
+type ProjectGroup = {
+  title: string
+  items: ProjectItem[]
+}
+
 const pt = {
   meta: {
     title: "Renata Alves — Product Designer Sênior · São Paulo",
@@ -190,6 +209,64 @@ const pt = {
         period: "Jul/2018 – Jan/2019",
       },
     ],
+  },
+  // Projects page: the cards reuse cases.items and cases.viewCase
+  projects: {
+    meta: {
+      title: "Projetos — Renata Alves, Product Designer Sênior",
+      description:
+        "Seleção de projetos de Renata Alves, Product Designer Sênior, em martech, fintech e e-commerce, da descoberta à entrega.",
+    },
+    eyebrow: "Projetos",
+    title: "Seleção de projetos em que atuei ao longo da minha trajetória",
+    // Title of the Home cases group: read by screen readers only
+    casesTitle: "Martech e fintech",
+    // Groups listed after the Home cases, each under its own title.
+    // placeholder: true marks texts still to be written.
+    groups: [
+      {
+        title: "E-commerce",
+        items: [
+          {
+            number: "04",
+            company: "Profit-e E-commerce Solutions",
+            year: "2018",
+            title: "Vacinas.net: Loja online de vacinas",
+            description:
+              "Vacina não se compra como qualquer produto: a decisão depende mais de confiança do que de preço. Em um Design Sprint com o cliente, chegamos a uma navegação pelo calendário vacinal e a uma página de produto que responde às dúvidas antes de vender.",
+            role: "Designer no time de projeto, da descoberta à entrega final · com Design Lead e UI Designer sênior",
+            tags: [
+              "Design Sprint",
+              "Arquitetura de informação",
+              "Prototipação",
+            ],
+            imageAlt: "Vacinas.net: Loja online de vacinas — imagem do projeto",
+          },
+          {
+            number: "05",
+            company: "Profit-e E-commerce Solutions",
+            year: "2018",
+            title: "A Nossa Drogaria",
+            description:
+              "A Nossa Drogaria queria levar ao digital a proximidade que já tinha nas lojas físicas. Com base em pesquisa de campo e benchmark, defini a direção visual: o azul virou a cor principal e o amarelo da marca, que prejudicava a legibilidade, ficou nos destaques de ação.",
+            role: "Designer responsável pela entrega, da descoberta à entrega final · com Gerente de projetos e Desenvolvimento",
+            tags: ["Pesquisa de campo", "Direção visual", "Design System"],
+            imageAlt: "A Nossa Drogaria — imagem do projeto",
+          },
+          {
+            number: "06",
+            company: "Profit-e E-commerce Solutions",
+            year: "2018",
+            title: "Redesign do e-commerce Mahogany",
+            description:
+              "No e-commerce da Mahogany, o mobile concentrava os acessos, mas preço e botão de compra ficavam abaixo da primeira dobra. Com base em dados de cliques e rolagem, redesenhei a experiência com botão de compra fixo, preço visível de início e atalhos de categoria na home.",
+            role: "Designer responsável pela entrega, do kickoff à entrega final · com Gerente de projetos e Desenvolvimento",
+            tags: ["Análise de dados", "Design responsivo", "Design System"],
+            imageAlt: "Redesign do e-commerce Mahogany — imagem do projeto",
+          },
+        ],
+      },
+    ] as ProjectGroup[],
   },
   about: {
     meta: {

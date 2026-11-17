@@ -172,6 +172,56 @@ const en: Dictionary = {
       },
     ],
   },
+  projects: {
+    meta: {
+      title: "Projects — Renata Alves, Senior Product Designer",
+      description:
+        "Selected projects by Renata Alves, a Senior Product Designer in martech, fintech and e-commerce, from discovery to delivery.",
+    },
+    eyebrow: "Projects",
+    title: "A selection of projects I’ve worked on throughout my career",
+    casesTitle: "Martech and fintech",
+    groups: [
+      {
+        title: "E-commerce",
+        items: [
+          {
+            number: "04",
+            company: "Profit-e E-commerce Solutions",
+            year: "2018",
+            title: "Vacinas.net: Online Vaccine Store",
+            description:
+              "Vaccines aren’t bought like any other product: the decision depends more on trust than on price. In a Design Sprint with the client, we arrived at navigation built around the vaccination schedule and a product page that answers questions before it sells.",
+            role: "Designer on the project team, from discovery to final delivery · with Design Lead and Senior UI Designer",
+            tags: ["Design Sprint", "Information architecture", "Prototyping"],
+            imageAlt: "Vacinas.net: Online Vaccine Store — project image",
+          },
+          {
+            number: "05",
+            company: "Profit-e E-commerce Solutions",
+            year: "2018",
+            title: "A Nossa Drogaria",
+            description:
+              "A Nossa Drogaria wanted to bring the closeness it already had in its physical stores to digital. Based on field research and benchmarking, I set the visual direction: blue became the main color, and the brand’s yellow, which hurt legibility, was kept for action highlights.",
+            role: "Design owner, from discovery to final delivery · with Project Manager and Development",
+            tags: ["Field research", "Visual direction", "Design System"],
+            imageAlt: "A Nossa Drogaria — project image",
+          },
+          {
+            number: "06",
+            company: "Profit-e E-commerce Solutions",
+            year: "2018",
+            title: "Mahogany e-commerce redesign",
+            description:
+              "On Mahogany’s e-commerce, mobile drove most of the traffic, but price and the buy button sat below the fold. Using click and scroll data, I redesigned the experience with a sticky buy button, price visible upfront, and category shortcuts on the home page.",
+            role: "Design owner, from kickoff to final delivery · with Project Manager and Development",
+            tags: ["Data analysis", "Responsive design", "Design System"],
+            imageAlt: "Mahogany e-commerce redesign — project image",
+          },
+        ],
+      },
+    ],
+  },
   about: {
     meta: {
       title: "About me — Renata Alves, Senior Product Designer",

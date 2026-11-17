@@ -8,6 +8,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@ds/components/ui/tooltip"
+import { PageHeading } from "@/components/page-heading"
 import type { Dictionary } from "@/dictionaries/pt"
 import { enter } from "@/lib/motion"
 import { isPending, site } from "@/lib/site"
@@ -39,22 +40,7 @@ export function AboutHero({
   return (
     <section id="top">
       <Container className="pt-20 pb-16">
-        <p
-          className={cn(
-            enter,
-            "text-xs font-semibold tracking-wider text-muted-foreground uppercase"
-          )}
-        >
-          {dict.eyebrow}
-        </p>
-        <h1
-          className={cn(
-            enter,
-            "mt-5 max-w-270 text-4xl leading-tight font-bold tracking-tight delay-60 md:text-5xl"
-          )}
-        >
-          {dict.title}
-        </h1>
+        <PageHeading eyebrow={dict.eyebrow} title={dict.title} />
         <p className={cn(enter, "mt-6 max-w-180 text-lg delay-100 md:text-xl")}>
           {dict.lead}
         </p>
