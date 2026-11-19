@@ -4,6 +4,7 @@ import { Contact } from "@/components/contact"
 import { ProjectsList } from "@/components/projects-list"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { SiteHeader } from "@/components/site-header"
+import { getProjects } from "@/lib/projects"
 import { getDictionary, getLocale } from "../dictionaries"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -27,7 +28,11 @@ export default async function ProjectsPage() {
       <SiteHeader dict={dict} locale={locale} page="projects" />
       {/* Body content may not be translated yet; mark its real language */}
       <main lang={dict.contentLang}>
-        <ProjectsList dict={dict.projects} cases={dict.cases} />
+        <ProjectsList
+          dict={dict.projects}
+          viewCase={dict.cases.viewCase}
+          projects={getProjects(locale)}
+        />
       </main>
       <Contact dict={dict.contact} links={dict.links} lang={dict.contentLang} />
       <RevealOnScroll />
