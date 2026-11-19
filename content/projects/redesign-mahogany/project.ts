@@ -1,7 +1,8 @@
 import { defineProject } from "@/lib/projects/schema"
+import body from "./case"
+import bodyEn from "./case.en"
 import cover from "./images/capa.png"
 
-// Sem case.ts ainda: aparece em Projetos, sem página de case.
 export default defineProject({
   slug: "redesign-mahogany",
   order: 6,
@@ -9,6 +10,7 @@ export default defineProject({
   company: "Profit-e E-commerce Solutions",
   year: "2018",
   cover,
+  body: { pt: body, en: bodyEn },
   text: {
     pt: {
       title: "Redesign do e-commerce Mahogany",
@@ -17,6 +19,12 @@ export default defineProject({
       roleSummary:
         "Designer responsável pela entrega, do kickoff à entrega final · com Gerente de projetos e Desenvolvimento",
       tags: ["Análise de dados", "Design responsivo", "Design System"],
+      skills: [
+        "Wireframes",
+        "UI Design",
+        "Direção visual",
+        "Gestão de stakeholders",
+      ],
       coverAlt: "Redesign do e-commerce Mahogany — imagem do projeto",
     },
     en: {
@@ -26,6 +34,12 @@ export default defineProject({
       roleSummary:
         "Design owner, from kickoff to final delivery · with Project Manager and Development",
       tags: ["Data analysis", "Responsive design", "Design System"],
+      skills: [
+        "Wireframes",
+        "UI Design",
+        "Visual direction",
+        "Stakeholder management",
+      ],
       coverAlt: "Mahogany e-commerce redesign — project image",
     },
   },

@@ -6,6 +6,7 @@ import { Container } from "@ds/components/ui/container"
 import { ImagePlaceholder } from "@ds/components/ui/image-placeholder"
 import { CaseSkills } from "@/components/case/case-skills"
 import type { Dictionary } from "@/dictionaries/pt"
+import type { Locale } from "@/lib/i18n"
 import type { ProjectView } from "@/lib/projects"
 import { enter } from "@/lib/motion"
 
@@ -14,14 +15,27 @@ const label =
 
 // Opening of a case page, with the same data as the project card: eyebrow
 // (case · company · year), title, summary, role line and reading time beside
-// the cover. The reading time is a placeholder for now.
+// the cover. The reading time (lib/projects readingMinutes) is left out while
+// the case body is pending.
 export function CaseHero({
   project,
   dict,
+  locale,
+  readingMinutes,
 }: {
   project: ProjectView
   dict: Dictionary["caseStudy"]
+  locale: Locale
+  readingMinutes?: number
 }) {
+  const readingTime =
+    readingMinutes &&
+    dict.readingTime[
+      new Intl.PluralRules(locale).select(readingMinutes) === "one"
+        ? "one"
+        : "other"
+    ].replace("{n}", String(readingMinutes))
+
   return (
     <Container className="pt-14 pb-16 md:pt-16 lg:pb-24">
       <div className="grid gap-x-12 gap-y-10 lg:grid-cols-12">
@@ -65,13 +79,16 @@ export function CaseHero({
               <dt className={label}>{dict.role}</dt>
               <dd className="mt-1.5">{project.roleSummary}</dd>
             </div>
-            <div>
-              <dt className={label}>{dict.reading}</dt>
-              <dd className="mt-1.5 flex items-center gap-2 whitespace-nowrap">
-                <ClockIcon aria-hidden className="size-4 shrink-0" />
-                {dict.readingPlaceholder}
-              </dd>
-            </div>
+            {readingTime && (
+              <div>
+                <dt className={label}>{dict.reading}</dt>
+                <dd className="mt-1.5 flex items-center gap-2 whitespace-nowrap">
+                  <ClockIcon aria-hidden className="size-4 shrink-0" />
+                  {/* ISO 8601 duration for machines, e.g. PT8M */}
+                  <time dateTime={`PT${readingMinutes}M`}>{readingTime}</time>
+                </dd>
+              </div>
+            )}
           </dl>
         </div>
 

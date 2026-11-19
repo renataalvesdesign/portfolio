@@ -39,7 +39,9 @@ function checkRegistry(list: Project[]) {
       `[projetos] Case(s) with content pending: ${pending.map((p) => p.slug).join(", ")}`
     )
   const missing = list.flatMap((project) =>
-    figuresOf(project.body).filter((figure) => !figure.image).length > 0
+    Object.values(project.body ?? {})
+      .flatMap(figuresOf)
+      .some((figure) => !figure.image)
       ? [project.slug]
       : []
   )
@@ -54,10 +56,14 @@ checkRegistry(allProjects)
 /** All projects, by `order` */
 export const projects = [...allProjects].sort((a, b) => a.order - b.order)
 
-/** Body of a project's case page. Every project has a page; without a
- *  case.ts it is a "content pending" page */
-export function caseBody(project: Project): CaseBody {
-  return project.body ?? { status: "pending", lang: "pt" }
+/** Body of a project's case page in `locale`, else the Portuguese one.
+ *  Every project has a page; without a case.ts it is a "content pending"
+ *  page */
+export function caseBody(project: Project, locale: Locale = "pt"): CaseBody {
+  return (
+    project.body?.[locale] ??
+    project.body?.pt ?? { status: "pending", lang: "pt" }
+  )
 }
 
 /** Card number: order 2 → "02" */
@@ -156,18 +162,26 @@ function blockText(block: Block): string[] {
   }
 }
 
-// Silent reading speed for non-fiction in Portuguese/English, words per minute
+// Silent reading speed for non-fiction, words per minute. The same average
+// serves Portuguese and English, the two languages of the site
 const wordsPerMinute = 200
 
-/** Whole minutes to read the case body (sections and their blocks). Not shown
- *  yet: the hero has a "00 minutos" placeholder (caseStudy.readingPlaceholder) */
+/** Whole minutes to read a case, shown in its hero. Counts only the case
+ *  body: section titles, text, lists, captions, figures and tables. Page
+ *  chrome (header, side index, hero, "next case" links, footer) is left out,
+ *  and so are image alt texts, which are not read on screen. Undefined while
+ *  the body is pending. Computed at build time; no library is needed, since
+ *  the body is already structured text (no markdown or HTML to parse) */
 export function readingMinutes(body: CaseBody) {
-  const text = [
-    ...(body.sections ?? []).flatMap((section) => [
-      section.title,
-      ...section.blocks.flatMap(blockText),
-    ]),
-  ].join(" ")
-  const words = text.replace(/\*/g, "").split(/\s+/).filter(Boolean).length
+  if (body.status === "pending") return undefined
+  const text = (body.sections ?? [])
+    .flatMap((section) => [section.title, ...section.blocks.flatMap(blockText)])
+    .join(" ")
+  // A word has at least one letter or digit, so "·", "—" or a lone "*"
+  // footnote mark do not count; **bold** and *italic* marks are dropped
+  const words = text
+    .replace(/\*/g, "")
+    .split(/\s+/)
+    .filter((token) => /[\p{L}\p{N}]/u.test(token)).length
   return Math.max(1, Math.round(words / wordsPerMinute))
 }

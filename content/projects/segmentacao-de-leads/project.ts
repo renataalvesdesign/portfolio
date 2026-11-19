@@ -1,5 +1,6 @@
 import { defineProject } from "@/lib/projects/schema"
 import body from "./case"
+import bodyEn from "./case.en"
 import cover from "./images/capa.png"
 
 export default defineProject({
@@ -9,7 +10,7 @@ export default defineProject({
   company: "TOTVS | RD Station",
   year: "2024",
   cover,
-  body,
+  body: { pt: body, en: bodyEn },
   text: {
     pt: {
       title: "Segmentação de leads",
@@ -22,6 +23,19 @@ export default defineProject({
         "Priorização",
         "Acompanhamento pós lançamento",
       ],
+      skills: [
+        "Benchmark",
+        "Teste de usabilidade",
+        "Análise de dados",
+        "Métricas de UX",
+        "Fluxos de usuário",
+        "Wireframes",
+        "UI Design",
+        "Prototipação",
+        "Design System",
+        "Critique de design",
+        "Handoff e documentação",
+      ],
       coverAlt: "Segmentação de leads — tela do editor de segmentação",
     },
     en: {
@@ -30,7 +44,20 @@ export default defineProject({
         "The segmentation editor was the third most-visited page in RD Marketing, but its legacy architecture made every new use case costly to ship. I redesigned the editor alongside engineering’s restructuring, which enabled features like relative date filters.",
       roleSummary:
         "Design owner, from discovery to post-launch stabilization · with PM, Engineering and Support",
-      tags: ["User interviews", "Prioritization", "Post-launch monitoring"],
+      tags: ["User interviews", "Prioritization", "Post-launch follow-up"],
+      skills: [
+        "Benchmarking",
+        "Usability testing",
+        "Data analysis",
+        "UX metrics",
+        "User flows",
+        "Wireframes",
+        "UI Design",
+        "Prototyping",
+        "Design System",
+        "Design critique",
+        "Handoff and documentation",
+      ],
       coverAlt: "Segmentation — editor screen",
     },
   },

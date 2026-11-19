@@ -1,8 +1,11 @@
-import Image from "next/image"
 import { cn } from "cn"
 
 import { ImagePlaceholder } from "@ds/components/ui/image-placeholder"
 import { RichText } from "@/components/case/rich-text"
+import {
+  ZoomableImage,
+  type ZoomLabels,
+} from "@/components/case/zoomable-image"
 import type { Block, FigureImage } from "@/lib/projects/schema"
 
 // The editorial blocks of a case body (lib/projects/schema.ts). Each block
@@ -15,10 +18,13 @@ const textWidth = 800
 export function CaseBlock({
   block,
   imagePending,
+  zoom,
 }: {
   block: Block
   /** "Imagem a inserir", in the page language */
   imagePending: string
+  /** Labels of the enlarge button and the enlarged view */
+  zoom: ZoomLabels
 }) {
   switch (block.type) {
     case "p":
@@ -56,25 +62,41 @@ export function CaseBlock({
           <FigureMedia
             figure={block.figure}
             imagePending={imagePending}
+            zoom={zoom}
             sizes={`(min-width: 1024px) ${textWidth}px, 100vw`}
           />
         </CaseFigure>
       )
-    case "figurePair":
+    case "figurePair": {
+      // Column widths from sm up; equal unless the block sets them
+      const [first, second] = block.widths ?? [1, 1]
+      const share = (width: number) => width / (first + second)
       return (
         <CaseFigure caption={block.caption}>
-          <div className="grid gap-6 sm:grid-cols-2">
-            {block.figures.map((figure) => (
-              <FigureMedia
-                key={figure.label}
-                figure={figure}
-                imagePending={imagePending}
-                sizes={`(min-width: 1024px) ${textWidth / 2}px, (min-width: 640px) 50vw, 100vw`}
-              />
-            ))}
+          <div
+            style={
+              {
+                "--pair-columns": `minmax(0, ${first}fr) minmax(0, ${second}fr)`,
+              } as React.CSSProperties
+            }
+            className="grid items-start gap-6 sm:grid-cols-(--pair-columns)"
+          >
+            {block.figures.map((figure, index) => {
+              const fraction = share(index === 0 ? first : second)
+              return (
+                <FigureMedia
+                  key={figure.label}
+                  figure={figure}
+                  imagePending={imagePending}
+                  zoom={zoom}
+                  sizes={`(min-width: 1024px) ${Math.round(textWidth * fraction)}px, (min-width: 640px) ${Math.round(fraction * 100)}vw, 100vw`}
+                />
+              )
+            })}
           </div>
         </CaseFigure>
       )
+    }
     case "quote":
       return <PullQuote text={block.text} />
     case "stats":
@@ -108,21 +130,21 @@ function CaseFigure({
 function FigureMedia({
   figure,
   imagePending,
+  zoom,
   sizes,
 }: {
   figure: FigureImage
   imagePending: string
+  zoom: ZoomLabels
   sizes: string
 }) {
   if (figure.image)
-    // Static imports carry width and height, so the space is reserved and
-    // the image loads lazily as it nears the viewport
     return (
-      <Image
-        src={figure.image}
+      <ZoomableImage
+        image={figure.image}
         alt={figure.alt}
         sizes={sizes}
-        className="h-auto w-full rounded-xl"
+        labels={zoom}
       />
     )
 

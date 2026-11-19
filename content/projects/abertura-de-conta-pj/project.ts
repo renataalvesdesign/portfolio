@@ -1,5 +1,6 @@
 import { defineProject } from "@/lib/projects/schema"
 import body from "./case"
+import bodyEn from "./case.en"
 import cover from "./images/capa.png"
 
 export default defineProject({
@@ -9,7 +10,7 @@ export default defineProject({
   company: "XP Inc.",
   year: "2023",
   cover,
-  body,
+  body: { pt: body, en: bodyEn },
   text: {
     pt: {
       title: "Abertura de conta PJ",
@@ -22,6 +23,18 @@ export default defineProject({
         "Entrevistas com stakeholders",
         "Blueprint de serviço",
       ],
+      skills: [
+        "Facilitação de workshops",
+        "Fluxos de usuário",
+        "Wireframes",
+        "UI Design",
+        "Prototipação",
+        "Design responsivo",
+        "Critique de design",
+        "Handoff e documentação",
+        "Gestão de stakeholders",
+        "Liderança de design",
+      ],
       coverAlt: "Abertura de conta PJ — fluxo em desktop e mobile",
     },
     en: {
@@ -31,6 +44,18 @@ export default defineProject({
       roleSummary:
         "Design owner, from discovery to handoff · with UX Research, PM and stakeholders",
       tags: ["Journey mapping", "Stakeholder interviews", "Service blueprint"],
+      skills: [
+        "Workshop facilitation",
+        "User flows",
+        "Wireframes",
+        "UI Design",
+        "Prototyping",
+        "Responsive design",
+        "Design critique",
+        "Handoff and documentation",
+        "Stakeholder management",
+        "Design leadership",
+      ],
       coverAlt: "Business account opening — desktop and mobile flow",
     },
   },

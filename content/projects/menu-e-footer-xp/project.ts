@@ -1,5 +1,6 @@
 import { defineProject } from "@/lib/projects/schema"
 import body from "./case"
+import bodyEn from "./case.en"
 import cover from "./images/capa.png"
 
 export default defineProject({
@@ -9,7 +10,7 @@ export default defineProject({
   company: "XP Inc.",
   year: "2022",
   cover,
-  body,
+  body: { pt: body, en: bodyEn },
   text: {
     pt: {
       title: "Menu e Footer XP",
@@ -18,6 +19,18 @@ export default defineProject({
       roleSummary:
         "Designer responsável pela entrega, da descoberta ao handoff · com PM, UX Writing, SEO e Design Ops",
       tags: ["Arquitetura de informação", "Card sorting", "Design system"],
+      skills: [
+        "Análise de dados",
+        "Benchmark",
+        "Tree testing",
+        "SEO",
+        "Facilitação de workshops",
+        "UI Design",
+        "Design responsivo",
+        "Acessibilidade",
+        "Handoff e documentação",
+        "Gestão de stakeholders",
+      ],
       coverAlt: "Menu e Footer XP — telas do menu e do footer",
     },
     en: {
@@ -27,6 +40,18 @@ export default defineProject({
       roleSummary:
         "Design owner, from discovery to handoff · with PM, UX Writing, SEO and Design Ops",
       tags: ["Information architecture", "Card sorting", "Design system"],
+      skills: [
+        "Data analysis",
+        "Benchmarking",
+        "Tree testing",
+        "SEO",
+        "Workshop facilitation",
+        "UI Design",
+        "Responsive design",
+        "Accessibility",
+        "Handoff and documentation",
+        "Stakeholder management",
+      ],
       coverAlt: "XP Menu and Footer — screens of the menu and footer",
     },
   },

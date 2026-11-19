@@ -170,19 +170,21 @@ const pt = {
     eyebrow: "Case",
     role: "Papel",
     reading: "Tempo de leitura",
-    readingPlaceholder: "00 minutos",
+    // {n}: whole minutes, from the case body (lib/projects readingMinutes)
+    readingTime: { one: "{n} minuto", other: "{n} minutos" },
     skills: {
       label: "Skills do projeto",
       more: "Mostrar mais {n} skills",
       collapse: "Recolher",
-      placeholder: "Skill a inserir",
     },
     toc: "Neste case",
     imagePending: "Imagem a inserir",
+    // Images that can be enlarged (shown larger than they fit in the text)
+    zoom: { open: "Ampliar imagem", close: "Fechar imagem ampliada" },
     contentPending:
       "O conteúdo deste case ainda está sendo escrito. Enquanto isso, veja o resumo acima ou os outros projetos.",
     // Shown when the case body is in another language than the page
-    otherLanguage: null as string | null,
+    otherLanguage: null as { title: string; description: string } | null,
     otherCases: "Outros cases",
     previous: "Anterior",
     next: "Próximo",

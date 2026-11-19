@@ -1,7 +1,8 @@
 import { defineProject } from "@/lib/projects/schema"
+import body from "./case"
+import bodyEn from "./case.en"
 import cover from "./images/capa.png"
 
-// Sem case.ts ainda: aparece em Projetos, sem página de case.
 export default defineProject({
   slug: "vacinas-net",
   order: 4,
@@ -9,6 +10,7 @@ export default defineProject({
   company: "Profit-e E-commerce Solutions",
   year: "2018",
   cover,
+  body: { pt: body, en: bodyEn },
   text: {
     pt: {
       title: "Vacinas.net: Loja online de vacinas",
@@ -17,6 +19,14 @@ export default defineProject({
       roleSummary:
         "Designer no time de projeto, da descoberta à entrega final · com Design Lead e UI Designer sênior",
       tags: ["Design Sprint", "Arquitetura de informação", "Prototipação"],
+      skills: [
+        "Benchmark",
+        "Priorização",
+        "Fluxos de usuário",
+        "Wireframes",
+        "Teste de usabilidade",
+        "Design responsivo",
+      ],
       coverAlt: "Vacinas.net: Loja online de vacinas — imagem do projeto",
     },
     en: {
@@ -26,6 +36,14 @@ export default defineProject({
       roleSummary:
         "Designer on the project team, from discovery to final delivery · with Design Lead and Senior UI Designer",
       tags: ["Design Sprint", "Information architecture", "Prototyping"],
+      skills: [
+        "Benchmarking",
+        "Prioritization",
+        "User flows",
+        "Wireframes",
+        "Usability testing",
+        "Responsive design",
+      ],
       coverAlt: "Vacinas.net: Online Vaccine Store — project image",
     },
   },

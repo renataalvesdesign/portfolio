@@ -47,6 +47,10 @@ export type Block =
       type: "figurePair"
       figures: [FigureImage, FigureImage]
       caption?: RichText
+      /** Relative column widths, e.g. [2.6, 1] for a desktop screen beside
+       *  a mobile one. Equal by default. Widths proportional to each image's
+       *  width ÷ height give both images the same height */
+      widths?: [number, number]
     }
   /** Pull quote: one key sentence in large type */
   | { type: "quote"; text: string }
@@ -95,14 +99,11 @@ export type ProjectText = {
   roleSummary: string
   /** Card tags (3); also the first, always visible chips of the case hero */
   tags: string[]
-  /** More skills, shown only on the case page behind a "+N" chip. Tags and
-   *  skills together are at most maxSkills; missing ones show placeholders */
+  /** More skills, shown only on the case page behind a "+N" chip, where N
+   *  is their count. Don't repeat the tags here */
   skills?: string[]
   coverAlt: string
 }
-
-/** Chips in a case hero: the tags plus the skills */
-export const maxSkills = 10
 
 export type Project = {
   /** URL segment: /[lang]/projetos/<slug>. Lowercase, digits and hyphens */
@@ -116,8 +117,11 @@ export type Project = {
   /** Static import of images/capa.png; a placeholder shows while missing */
   cover?: StaticImageData
   text: Record<Locale, ProjectText>
-  /** The case page. Without it the page shows "content pending" */
-  body?: CaseBody
+  /** The case page, per language like `text`: `{ pt: body, en: bodyEn }`
+   *  from case.ts and case.en.ts. A language without its body shows the
+   *  Portuguese one, with the "other language" notice. Without any body the
+   *  page shows "content pending" */
+  body?: Partial<Record<Locale, CaseBody>>
 }
 
 // ---------------------------------------------------------------------------
@@ -148,6 +152,10 @@ export function defineProject(project: Project): Project {
   if (!Number.isInteger(project.order) || project.order < 1)
     fail(where, "order must be a whole number from 1")
 
+  for (const [locale, body] of Object.entries(project.body ?? {}))
+    if (body && body.lang !== locale)
+      fail(where, `body.${locale} has lang "${body.lang}"`)
+
   for (const [locale, text] of Object.entries(project.text)) {
     for (const field of [
       "title",
@@ -156,8 +164,9 @@ export function defineProject(project: Project): Project {
       "coverAlt",
     ] as const)
       if (!text[field]?.trim()) fail(where, `text.${locale}.${field} is empty`)
-    if (text.tags.length + (text.skills?.length ?? 0) > maxSkills)
-      fail(where, `text.${locale}: tags + skills must be ${maxSkills} at most`)
+    const repeated = text.skills?.find((skill) => text.tags.includes(skill))
+    if (repeated)
+      fail(where, `text.${locale}: "${repeated}" is both a tag and a skill`)
   }
   return project
 }
@@ -179,6 +188,11 @@ export function defineCase(body: CaseBody): CaseBody {
         (block.items.length < 2 || block.items.length > 4)
       )
         fail(where, "stats needs 2 to 4 items")
+      if (
+        block.type === "figurePair" &&
+        block.widths?.some((width) => !(width > 0))
+      )
+        fail(where, "figurePair widths must be positive numbers")
       if (block.type === "comparison") {
         const width = block.columns.length
         if (block.rows.some((row) => row.length !== width))

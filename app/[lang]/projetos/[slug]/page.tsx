@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
+import { LanguagesIcon } from "lucide-react"
 
+import { Alert, AlertDescription, AlertTitle } from "@ds/components/ui/alert"
 import { Container } from "@ds/components/ui/container"
 import { CaseBlock } from "@/components/case/case-blocks"
 import { CaseHero } from "@/components/case/case-hero"
@@ -12,6 +14,7 @@ import { SiteHeader } from "@/components/site-header"
 import {
   caseBody,
   caseNeighbors,
+  readingMinutes,
   caseSections,
   localize,
   projects,
@@ -29,10 +32,11 @@ export function generateStaticParams() {
 async function findCase(
   params: PageProps<"/[lang]/projetos/[slug]">["params"]
 ) {
-  const { slug } = await params
+  const [{ slug }, locale] = await Promise.all([params, getLocale()])
   const project = projects.find((item) => item.slug === slug)
   if (!project) notFound()
-  return { project, body: caseBody(project) }
+  // The body in the page language when the case has that translation
+  return { project, body: caseBody(project, locale) }
 }
 
 export async function generateMetadata({
@@ -91,13 +95,22 @@ export default async function CasePage({
       )}
       <SiteHeader dict={dict} locale={locale} page="projects" />
       <main id="top" className="surface-light">
-        <CaseHero project={view} dict={t} />
+        <CaseHero
+          project={view}
+          dict={t}
+          locale={locale}
+          readingMinutes={readingMinutes(body)}
+        />
 
         <Container className="pb-24">
           {body.lang !== locale && t.otherLanguage && (
-            <p className="mb-12 max-w-200 rounded-xl border px-5 py-4 text-sm">
-              {t.otherLanguage}
-            </p>
+            // A static notice, not an interruption: role="note" replaces the
+            // Alert's role="alert", which screen readers announce on load
+            <Alert variant="info" role="note" className="mb-12">
+              <LanguagesIcon aria-hidden />
+              <AlertTitle>{t.otherLanguage.title}</AlertTitle>
+              <AlertDescription>{t.otherLanguage.description}</AlertDescription>
+            </Alert>
           )}
 
           {published ? (
@@ -135,6 +148,7 @@ export default async function CasePage({
                         key={blockIndex}
                         block={block}
                         imagePending={t.imagePending}
+                        zoom={t.zoom}
                       />
                     ))}
                   </section>

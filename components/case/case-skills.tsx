@@ -7,11 +7,10 @@ import { cn } from "cn"
 import { Badge } from "@ds/components/ui/badge"
 import { Button } from "@ds/components/ui/button"
 import type { Dictionary } from "@/dictionaries/pt"
-import { maxSkills } from "@/lib/projects/schema"
 
 // Skill chips of a case hero. The card's tags come first and stay visible;
-// a "+N" chip reveals the other skills, and "Recolher" folds them back.
-// Missing skills are shown as placeholders up to maxSkills chips in total.
+// a "+N" chip reveals the other skills (N is exactly how many), and
+// "Recolher" folds them back. Without skills there is no toggle.
 export function CaseSkills({
   tags,
   skills = [],
@@ -27,13 +26,7 @@ export function CaseSkills({
   const listRef = useRef<HTMLUListElement>(null)
   const moreRef = useRef<HTMLButtonElement>(null)
 
-  const extra = [
-    ...skills.map((name) => ({ name, placeholder: false })),
-    ...Array.from(
-      { length: Math.max(0, maxSkills - tags.length - skills.length) },
-      () => ({ name: dict.placeholder, placeholder: true })
-    ),
-  ]
+  const extra = skills
   const listId = "case-skills"
 
   function expand() {
@@ -67,12 +60,11 @@ export function CaseSkills({
       ))}
 
       {open &&
-        extra.map((skill, index) => (
+        extra.map((skill) => (
           // Focus target after expanding (not in the tab order)
-          <li key={index} tabIndex={-1} className="rounded-lg outline-none">
-            {/* Placeholders are the same chip; only the text tells them apart */}
+          <li key={skill} tabIndex={-1} className="rounded-lg outline-none">
             <Badge size="lg" variant="secondary">
-              {skill.name}
+              {skill}
             </Badge>
           </li>
         ))}
