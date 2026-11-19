@@ -37,9 +37,10 @@ export function TrialNotice() {
 const props: PropRow[] = [
   {
     name: "Alert · variant",
-    type: '"default" | "destructive"',
+    type: '"default" | "destructive" | "info"',
     defaultValue: '"default"',
-    description: "destructive colors the title, description and icon as an error.",
+    description:
+      "destructive colors the title, description and icon as an error. info tints the alert with the info color, for a notice that must be seen but is not an error.",
   },
   {
     name: "Alert · children",
@@ -92,6 +93,16 @@ export default function AlertShowcase() {
             </Alert>
           </Example>
 
+          <Example label="info" className="items-start">
+            <Alert variant="info">
+              <Info />
+              <AlertTitle>Translation in progress</AlertTitle>
+              <AlertDescription>
+                This page is currently available in Portuguese only.
+              </AlertDescription>
+            </Alert>
+          </Example>
+
           <Example label="Without icon" className="items-start">
             <Alert>
               <AlertTitle>New issue published</AlertTitle>
@@ -132,7 +143,7 @@ export default function AlertShowcase() {
 
       <Section
         title="States"
-        description="The alert is a static message with role=&quot;alert&quot;, so it has no hover, focus or disabled state. Only links inside the title or description react: they are underlined and darken on hover."
+        description='The alert is a static message with role="alert", so it has no hover, focus or disabled state. Only links inside the title or description react: they are underlined and darken on hover.'
       >
         <Preview>
           <Example label="With link">
@@ -150,7 +161,10 @@ export default function AlertShowcase() {
         </Preview>
       </Section>
 
-      <Section title="On cream surface" description="Inside .surface-light the same component switches to the cream tokens.">
+      <Section
+        title="On cream surface"
+        description="Inside .surface-light the same component switches to the cream tokens."
+      >
         <LightPreview className="grid gap-4 md:grid-cols-2">
           <Alert>
             <Info />

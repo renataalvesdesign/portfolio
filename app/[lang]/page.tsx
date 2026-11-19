@@ -6,6 +6,7 @@ import { Process } from "@/components/process"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { SiteHeader } from "@/components/site-header"
 import { SkillsStrip } from "@/components/skills-strip"
+import { getProjects } from "@/lib/projects"
 import { paths } from "@/lib/site"
 import { getDictionary, getLocale } from "./dictionaries"
 
@@ -23,7 +24,7 @@ export default async function Page() {
       {/* Body content may not be translated yet; mark its real language */}
       <main lang={dict.contentLang}>
         <Hero dict={dict.hero} titleLang={locale} />
-        <Cases dict={dict.cases} />
+        <Cases dict={dict.cases} projects={getProjects(locale, "selected")} />
         <Process dict={dict.process} projectsHref={paths.projects(locale)} />
         <SkillsStrip dict={dict.skills} />
         <Experience

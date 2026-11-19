@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { ArrowRightIcon } from "lucide-react"
 import { cn } from "cn"
 
@@ -7,7 +8,7 @@ import { Container } from "@ds/components/ui/container"
 import { TimelineProgress } from "@/components/timeline-progress"
 import type { Dictionary } from "@/dictionaries/pt"
 import type { Locale } from "@/lib/i18n"
-import { site } from "@/lib/site"
+import { getProject, localize } from "@/lib/projects"
 
 const label =
   "text-xs font-semibold tracking-wider text-muted-foreground uppercase"
@@ -19,14 +20,14 @@ const label =
 // history" link lands on the id.
 export function CareerTimeline({
   dict,
-  cases,
   locale,
 }: {
   dict: Dictionary["about"]["experience"]
-  cases: Dictionary["cases"]["items"]
   locale: Locale
 }) {
   const plural = new Intl.PluralRules(locale)
+  // Related cases are project slugs; an unknown slug fails the build
+  const project = (slug: string) => localize(getProject(slug), locale)
 
   return (
     <section id="experiencia" aria-labelledby="experiencia-title">
@@ -94,21 +95,21 @@ export function CareerTimeline({
                           aria-labelledby={`casos-${jobIndex}`}
                           className="flex flex-wrap items-baseline gap-x-6 gap-y-2"
                         >
-                          {job.cases.map((index) => (
-                            <li key={index}>
+                          {job.cases.map((slug) => (
+                            <li key={slug}>
                               <Button
                                 asChild
                                 variant="link"
                                 className="h-auto px-0 text-base font-semibold focus-visible:underline"
                               >
-                                <a href={site.caseUrls[index] ?? "#"}>
-                                  {cases[index]?.title}
+                                <Link href={project(slug).href}>
+                                  {project(slug).title}
                                   <ArrowRightIcon
                                     data-icon="inline-end"
                                     aria-hidden
                                     className="transition-transform group-hover/button:translate-x-[3px] group-focus-visible/button:translate-x-[3px] motion-reduce:transition-none"
                                   />
-                                </a>
+                                </Link>
                               </Button>
                             </li>
                           ))}

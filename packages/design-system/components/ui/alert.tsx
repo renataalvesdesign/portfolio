@@ -10,6 +10,9 @@ const alertVariants = cva(
         default: "bg-card text-card-foreground",
         destructive:
           "bg-card text-destructive *:data-[slot=alert-description]:text-destructive/90 *:[svg]:text-current",
+        // Notice that should be seen but is not an error: tinted with the
+        // info color, the title and icon in it, the description in foreground
+        info: "border-info/40 bg-info/10 text-info *:data-[slot=alert-description]:text-foreground",
       },
     },
     defaultVariants: {

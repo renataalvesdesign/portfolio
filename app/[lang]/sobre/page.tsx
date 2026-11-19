@@ -32,11 +32,7 @@ export default async function AboutPage() {
     <Competencies key="competencies" dict={dict.about.skills} />,
     // One continuous navy band: experience, then education
     <div key="background">
-      <CareerTimeline
-        dict={dict.about.experience}
-        cases={dict.cases.items}
-        locale={locale}
-      />
+      <CareerTimeline dict={dict.about.experience} locale={locale} />
       <Education dict={dict.about.education} />
     </div>,
   ]

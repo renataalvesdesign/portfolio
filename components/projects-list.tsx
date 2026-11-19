@@ -1,82 +1,59 @@
-import type { StaticImageData } from "next/image"
 import { cn } from "cn"
 
 import { Container } from "@ds/components/ui/container"
 import { CaseCard } from "@/components/cases"
 import { PageHeading } from "@/components/page-heading"
 import type { Dictionary } from "@/dictionaries/pt"
-import { caseCovers, projectCovers } from "@/lib/cases"
-import { site } from "@/lib/site"
+import type { ProjectView } from "@/lib/projects"
+import { projectGroups } from "@/lib/projects/schema"
 
-type Card = {
-  item: Dictionary["cases"]["items"][number]
-  href: string
-  cover?: StaticImageData
-}
-
-// Projects page: the page heading over the Home cases, then each group of
-// projects.groups under its own section title, in the same grid.
+// Projects page: the page heading, then every project of content/projects
+// grouped by project.group, each group under its own section title, in the
+// same grid. The "selected" group (the Home cases) comes first, with its
+// title read by screen readers only.
 export function ProjectsList({
   dict,
-  cases,
+  projects,
+  viewCase,
 }: {
-  dict: Pick<
-    Dictionary["projects"],
-    "eyebrow" | "title" | "casesTitle" | "groups"
-  >
-  cases: Dictionary["cases"]
+  dict: Pick<Dictionary["projects"], "eyebrow" | "title" | "groupTitles">
+  projects: ProjectView[]
+  viewCase: string
 }) {
-  // Placeholders are temporary: flag them on every build and dev render
-  const placeholders = dict.groups
-    .flatMap((group) => group.items)
-    .filter((item) => item.placeholder)
-  if (placeholders.length > 0) {
-    console.warn(
-      `[projetos] ${placeholders.length} case(s) still marked placeholder: true in projects.groups. Replace them before publishing.`
-    )
-  }
+  const groups = projectGroups
+    .map((group) => ({
+      group,
+      items: projects.filter((project) => project.group === group),
+    }))
+    .filter(({ items }) => items.length > 0)
 
   return (
     <section id="top">
       <Container className="pt-20 pb-32">
         <PageHeading eyebrow={dict.eyebrow} title={dict.title} />
 
-        {/* The Home cases have no visible title; the hidden h2 keeps the
-            heading levels in order (h1 → h2 → card h3) for screen readers */}
-        <section aria-labelledby="projetos-grupo-0" className="mt-16">
-          <h2 id="projetos-grupo-0" className="sr-only">
-            {dict.casesTitle}
-          </h2>
-          <CaseGrid
-            viewCase={cases.viewCase}
-            cards={cases.items.map((item, index) => ({
-              item,
-              href: site.caseUrls[index] ?? "#",
-              cover: caseCovers[index],
-            }))}
-          />
-        </section>
-
-        {dict.groups.map((group, groupIndex) => {
-          const titleId = `projetos-grupo-${groupIndex + 1}`
+        {groups.map(({ group, items }, groupIndex) => {
+          const titleId = `projetos-grupo-${groupIndex}`
+          const hiddenTitle = group === "selected"
           return (
             <section
-              key={group.title}
+              key={group}
               aria-labelledby={titleId}
-              className="mt-28"
+              className={groupIndex === 0 ? "mt-16" : "mt-28"}
             >
-              {/* Same size as the section titles of the other pages */}
-              <h2 id={titleId} className="text-section-title">
-                {group.title}
+              {/* The Home cases have no visible title; the hidden h2 keeps
+                  the heading levels in order (h1 → h2 → card h3). The others
+                  use the size of the section titles of the other pages. */}
+              <h2
+                id={titleId}
+                className={hiddenTitle ? "sr-only" : "text-section-title"}
+              >
+                {dict.groupTitles[group]}
               </h2>
               <CaseGrid
-                viewCase={cases.viewCase}
-                className="mt-10"
-                cards={group.items.map((item) => ({
-                  item,
-                  href: site.projectUrls[item.number] ?? "#",
-                  cover: projectCovers[item.number],
-                }))}
+                viewCase={viewCase}
+                items={items}
+                className={hiddenTitle ? undefined : "mt-10"}
               />
             </section>
           )
@@ -92,11 +69,11 @@ export function ProjectsList({
 // apart. Tablet: 56px between rows, 32px between columns, 300px covers.
 // Desktop: 72px both ways.
 function CaseGrid({
-  cards,
+  items,
   viewCase,
   className,
 }: {
-  cards: Card[]
+  items: ProjectView[]
   viewCase: string
   className?: string
 }) {
@@ -110,15 +87,13 @@ function CaseGrid({
         className
       )}
     >
-      {cards.map(({ item, href, cover }) => (
+      {items.map((item) => (
         <li
-          key={item.number}
+          key={item.slug}
           className="md:row-span-7 md:grid md:grid-rows-subgrid md:nth-[n+3]:mt-14 lg:nth-[n+3]:mt-18"
         >
           <CaseCard
             item={item}
-            href={href}
-            cover={cover}
             viewCase={viewCase}
             subgridFrom="md"
             imageClassName="aspect-auto h-85 md:h-75 lg:h-85"

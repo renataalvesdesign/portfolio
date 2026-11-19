@@ -1,4 +1,5 @@
-import Image, { type StaticImageData } from "next/image"
+import Image from "next/image"
+import Link from "next/link"
 import { ArrowRightIcon } from "lucide-react"
 import { cn } from "cn"
 
@@ -8,10 +9,7 @@ import { Container } from "@ds/components/ui/container"
 import { ImagePlaceholder } from "@ds/components/ui/image-placeholder"
 import { CaseCarousel } from "@/components/case-carousel"
 import type { Dictionary } from "@/dictionaries/pt"
-import { caseCovers } from "@/lib/cases"
-import { site } from "@/lib/site"
-
-type CaseItem = Dictionary["cases"]["items"][number]
+import type { ProjectView } from "@/lib/projects"
 
 // Classes that line a card's 7 rows up with its neighbour's through subgrid.
 // The parent grid spans each card over 7 rows from the same breakpoint: lg on
@@ -31,7 +29,14 @@ const subgridClasses = {
   },
 }
 
-export function Cases({ dict }: { dict: Dictionary["cases"] }) {
+// Home: the "selected" projects of content/projects, in their order
+export function Cases({
+  dict,
+  projects,
+}: {
+  dict: Dictionary["cases"]
+  projects: ProjectView[]
+}) {
   return (
     <section id="projetos" className="border-t">
       <Container className="pt-16 pb-32">
@@ -44,12 +49,10 @@ export function Cases({ dict }: { dict: Dictionary["cases"] }) {
           labels={dict.carousel}
           className="mt-10"
         >
-          {dict.items.map((item, index) => (
+          {projects.map((project, index) => (
             <CaseCard
-              key={item.number}
-              item={item}
-              href={site.caseUrls[index] ?? "#"}
-              cover={caseCovers[index]}
+              key={project.slug}
+              item={project}
               featured={index === 0}
               viewCase={dict.viewCase}
             />
@@ -62,18 +65,14 @@ export function Cases({ dict }: { dict: Dictionary["cases"] }) {
 
 export function CaseCard({
   item,
-  href,
-  cover,
   viewCase,
   featured = false,
   subgridFrom = "lg",
   imageClassName,
   className,
 }: {
-  item: CaseItem
-  href: string
-  /** Missing while the case has no cover yet: shows a placeholder */
-  cover?: StaticImageData
+  /** A project without a cover yet shows a placeholder */
+  item: ProjectView
   viewCase: string
   featured?: boolean
   /** Breakpoint from which a non-featured card is a 7-row subgrid */
@@ -118,10 +117,10 @@ export function CaseCard({
             660/340 frame, so the featured image is a little lower there.
             Without a cover yet, the Design System placeholder fills the
             same frame. */}
-        {cover ? (
+        {item.cover ? (
           <Image
-            src={cover}
-            alt={item.imageAlt}
+            src={item.cover}
+            alt={item.coverAlt}
             sizes={
               featured
                 ? "(min-width: 1024px) 50vw, 100vw"
@@ -130,7 +129,7 @@ export function CaseCard({
             className={coverClassName}
           />
         ) : (
-          <ImagePlaceholder alt={item.imageAlt} className={coverClassName} />
+          <ImagePlaceholder alt={item.coverAlt} className={coverClassName} />
         )}
       </div>
 
@@ -153,8 +152,10 @@ export function CaseCard({
         >
           {item.title}
         </h3>
-        <p className="text-muted-foreground">{item.description}</p>
-        <p className="mt-4.5 text-sm text-muted-foreground">{item.role}</p>
+        <p className="text-muted-foreground">{item.summary}</p>
+        <p className="mt-4.5 text-sm text-muted-foreground">
+          {item.roleSummary}
+        </p>
         <ul className="mt-5 flex flex-wrap gap-2">
           {item.tags.map((tag) => (
             <li key={tag}>
@@ -169,11 +170,16 @@ export function CaseCard({
           variant="link"
           className={cn(
             "mt-5.5 h-auto px-0 text-base font-semibold group-hover:underline after:absolute after:-inset-4 after:rounded-2xl",
+            // No press offset. Any translate, even 0px (Tailwind's
+            // translate-none), makes the link the containing block of its
+            // ::after: the hit area shrank to the link mid-click, so a press
+            // anywhere else on the card never completed. "none" is literal.
+            "active:not-aria-[haspopup]:[translate:none]!",
             // Keeps its own width in the card's grid row
             !featured && subgrid.link
           )}
         >
-          <a href={href}>
+          <Link href={item.href}>
             {viewCase}
             <span className="sr-only">: {item.title}</span>
             <ArrowRightIcon
@@ -181,7 +187,7 @@ export function CaseCard({
               aria-hidden
               className="transition-transform group-hover:translate-x-[3px] group-has-focus-visible:translate-x-[3px] motion-reduce:transition-none"
             />
-          </a>
+          </Link>
         </Button>
       </div>
     </article>

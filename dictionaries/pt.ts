@@ -4,7 +4,8 @@ type AboutJob = {
   period: string
   summary: string | null
   description: string[]
-  cases: number[]
+  /** Project slugs (content/projects), linked to their case pages */
+  cases: string[]
   focus: string[]
   tools: string[]
 }
@@ -14,25 +15,6 @@ type Course = {
   institution?: string
   date: string
   placeholder?: boolean
-}
-
-// A case shown only on the Projects page; same fields as cases.items.
-// Its cover and link are looked up by number (lib/cases.ts, lib/site.ts).
-type ProjectItem = {
-  number: string
-  company: string
-  year: string
-  title: string
-  description: string
-  role: string
-  tags: string[]
-  imageAlt: string
-  placeholder?: boolean
-}
-
-type ProjectGroup = {
-  title: string
-  items: ProjectItem[]
 }
 
 const pt = {
@@ -83,49 +65,6 @@ const pt = {
       next: "Próximo case",
       position: "{current} de {total}",
     },
-    items: [
-      {
-        number: "01",
-        company: "TOTVS | RD Station",
-        year: "2024",
-        title: "Segmentação de leads",
-        description:
-          "O editor de segmentação era a 3ª página mais acessada do RD Marketing, mas a arquitetura legada tornava cada novo caso de uso custoso de entregar. Redesenhei o editor junto da reestruturação da engenharia, o que viabilizou entregas como filtros de datas relativas.",
-        role: "Designer responsável pela entrega, da descoberta à estabilização · com PM, Engenharia e Suporte",
-        tags: [
-          "Entrevistas com usuários",
-          "Priorização",
-          "Acompanhamento pós lançamento",
-        ],
-        imageAlt: "Segmentação de leads — tela do editor de segmentação",
-      },
-      {
-        number: "02",
-        company: "XP Inc.",
-        year: "2023",
-        title: "Abertura de conta PJ",
-        description:
-          "A abertura de conta cruzava cinco áreas, com handoffs falhos e sem jornada documentada. Apoiei o mapeamento e desenhei o fluxo de envio de documentos, com status em tempo real. Primeiros sinais: menos esforço manual nos times.",
-        role: "Designer responsável pela entrega, da descoberta ao handoff · com UX Research, PM e stakeholders",
-        tags: [
-          "Mapa de jornada",
-          "Entrevistas com stakeholders",
-          "Blueprint de serviço",
-        ],
-        imageAlt: "Abertura de conta PJ — fluxo em desktop e mobile",
-      },
-      {
-        number: "03",
-        company: "XP Inc.",
-        year: "2022",
-        title: "Menu e Footer XP",
-        description:
-          "O site da XP foi desenhado para uma corretora e não comportava um banco. Eram duas entregas pontuais; propus repensar a navegação inteira e a PM aprovou priorizá-la no roadmap do semestre. A estrutura, validada com tree testing, virou padrão para XP, Rico e Clear.",
-        role: "Designer responsável pela entrega, da descoberta ao handoff · com PM, UX Writing, SEO e Design Ops",
-        tags: ["Arquitetura de informação", "Card sorting", "Design system"],
-        imageAlt: "Menu e Footer XP — telas do menu e do footer",
-      },
-    ],
   },
   process: {
     title: "Como chego à clareza",
@@ -210,7 +149,7 @@ const pt = {
       },
     ],
   },
-  // Projects page: the cards reuse cases.items and cases.viewCase
+  // Projects page: the cards come from content/projects
   projects: {
     meta: {
       title: "Projetos — Renata Alves, Product Designer Sênior",
@@ -219,54 +158,36 @@ const pt = {
     },
     eyebrow: "Projetos",
     title: "Seleção de projetos em que atuei ao longo da minha trajetória",
-    // Title of the Home cases group: read by screen readers only
-    casesTitle: "Martech e fintech",
-    // Groups listed after the Home cases, each under its own title.
-    // placeholder: true marks texts still to be written.
-    groups: [
-      {
-        title: "E-commerce",
-        items: [
-          {
-            number: "04",
-            company: "Profit-e E-commerce Solutions",
-            year: "2018",
-            title: "Vacinas.net: Loja online de vacinas",
-            description:
-              "Vacina não se compra como qualquer produto: a decisão depende mais de confiança do que de preço. Em um Design Sprint com o cliente, chegamos a uma navegação pelo calendário vacinal e a uma página de produto que responde às dúvidas antes de vender.",
-            role: "Designer no time de projeto, da descoberta à entrega final · com Design Lead e UI Designer sênior",
-            tags: [
-              "Design Sprint",
-              "Arquitetura de informação",
-              "Prototipação",
-            ],
-            imageAlt: "Vacinas.net: Loja online de vacinas — imagem do projeto",
-          },
-          {
-            number: "05",
-            company: "Profit-e E-commerce Solutions",
-            year: "2018",
-            title: "A Nossa Drogaria",
-            description:
-              "A Nossa Drogaria queria levar ao digital a proximidade que já tinha nas lojas físicas. Com base em pesquisa de campo e benchmark, defini a direção visual: o azul virou a cor principal e o amarelo da marca, que prejudicava a legibilidade, ficou nos destaques de ação.",
-            role: "Designer responsável pela entrega, da descoberta à entrega final · com Gerente de projetos e Desenvolvimento",
-            tags: ["Pesquisa de campo", "Direção visual", "Design System"],
-            imageAlt: "A Nossa Drogaria — imagem do projeto",
-          },
-          {
-            number: "06",
-            company: "Profit-e E-commerce Solutions",
-            year: "2018",
-            title: "Redesign do e-commerce Mahogany",
-            description:
-              "No e-commerce da Mahogany, o mobile concentrava os acessos, mas preço e botão de compra ficavam abaixo da primeira dobra. Com base em dados de cliques e rolagem, redesenhei a experiência com botão de compra fixo, preço visível de início e atalhos de categoria na home.",
-            role: "Designer responsável pela entrega, do kickoff à entrega final · com Gerente de projetos e Desenvolvimento",
-            tags: ["Análise de dados", "Design responsivo", "Design System"],
-            imageAlt: "Redesign do e-commerce Mahogany — imagem do projeto",
-          },
-        ],
-      },
-    ] as ProjectGroup[],
+    // Group titles (project.group in content/projects). The "selected"
+    // group opens the page under a title read by screen readers only.
+    groupTitles: {
+      selected: "Martech e fintech",
+      ecommerce: "E-commerce",
+    },
+  },
+  // Case pages (/projetos/<slug>); the case texts live in content/projects
+  caseStudy: {
+    eyebrow: "Case",
+    role: "Papel",
+    reading: "Tempo de leitura",
+    // {n}: whole minutes, from the case body (lib/projects readingMinutes)
+    readingTime: { one: "{n} minuto", other: "{n} minutos" },
+    skills: {
+      label: "Skills do projeto",
+      more: "Mostrar mais {n} skills",
+      collapse: "Recolher",
+    },
+    toc: "Neste case",
+    imagePending: "Imagem a inserir",
+    // Images that can be enlarged (shown larger than they fit in the text)
+    zoom: { open: "Ampliar imagem", close: "Fechar imagem ampliada" },
+    contentPending:
+      "O conteúdo deste case ainda está sendo escrito. Enquanto isso, veja o resumo acima ou os outros projetos.",
+    // Shown when the case body is in another language than the page
+    otherLanguage: null as { title: string; description: string } | null,
+    otherCases: "Outros cases",
+    previous: "Anterior",
+    next: "Próximo",
   },
   about: {
     meta: {
@@ -288,7 +209,6 @@ const pt = {
       relatedCases: { one: "Case relacionado:", other: "Cases relacionados:" },
       focusLabel: "Foco",
       toolsLabel: "Ferramentas",
-      // cases: indexes into cases.items, linked to their case pages
       items: [
         {
           role: "Product Designer Sênior",
@@ -299,7 +219,7 @@ const pt = {
           description: [
             "Projetei e evoluí as experiências de gestão de contatos, segmentação, importação de dados e tags, em parceria com Produto e Engenharia, conduzindo discovery e acompanhando churn para apoiar a priorização. Atuei além do meu time, facilitando um card sorting com os times de marketing para a evolução da navegação do RD Station Marketing e explorando experiências com IA no editor de Landing Pages. Fiz design review de entregas de outros designers e apoiei a evolução do Design System.",
           ],
-          cases: [0],
+          cases: ["segmentacao-de-leads"],
           focus: [
             "Gestão de contatos",
             "Product discovery",
@@ -338,7 +258,7 @@ const pt = {
           description: [
             "Projetei experiências da aquisição e abertura de conta à ativação, em XP Investimentos, Rico e Clear, em parceria com Produto, Engenharia e UX Research. Planejei e conduzi testes A/B e usei métricas de aquisição e conversão para embasar decisões de design. Criei templates de componentes para que pessoas não desenvolvedoras montassem páginas no WordPress e contribuí para a padronização de interfaces.",
           ],
-          cases: [1, 2],
+          cases: ["abertura-de-conta-pj", "menu-e-footer-xp"],
           focus: [
             "Testes A/B",
             "Métricas de conversão",
