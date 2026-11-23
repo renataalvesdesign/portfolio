@@ -7,6 +7,7 @@ import {
   TooltipTrigger,
 } from "@ds/components/ui/tooltip"
 import { Container } from "@ds/components/ui/container"
+import { CookiePreferencesButton } from "@/components/cookie-preferences-button"
 import { Highlight } from "@/components/highlight"
 import { ScrollLink } from "@/components/scroll-link"
 import type { Dictionary } from "@/dictionaries/pt"
@@ -92,9 +93,7 @@ export function Contact({
         <div className="mt-20 flex flex-wrap items-center justify-between gap-6 border-t pt-6">
           <p className="text-sm text-muted-foreground">{dict.copyright}</p>
           <div className="flex items-center gap-7">
-            <Button asChild variant="link" className="h-auto px-0">
-              <a href={site.cookiePreferencesUrl}>{dict.cookies}</a>
-            </Button>
+            <CookiePreferencesButton>{dict.cookies}</CookiePreferencesButton>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button asChild variant="outline" size="icon-xl">

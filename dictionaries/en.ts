@@ -376,6 +376,13 @@ const en: Dictionary = {
     backToTop: "Back to top",
     copyright: "© 2026 Renata Alves",
   },
+  cookieConsent: {
+    title: "Your privacy matters.",
+    description:
+      "I use Google Analytics to understand how visitors interact with this portfolio. Analytics cookies are only enabled with your consent.",
+    decline: "Decline",
+    accept: "Accept",
+  },
 }
 
 export default en

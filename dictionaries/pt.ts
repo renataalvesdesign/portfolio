@@ -405,6 +405,14 @@ const pt = {
     backToTop: "Voltar ao topo",
     copyright: "© 2026 Renata Alves",
   },
+  // Consent banner: the title is the bold lead, followed by the description
+  cookieConsent: {
+    title: "Sua privacidade importa.",
+    description:
+      "Utilizo o Google Analytics para entender como as pessoas navegam pelo meu portfólio. Os cookies de análise só são ativados com sua autorização.",
+    decline: "Recusar",
+    accept: "Aceitar",
+  },
 }
 
 export type Dictionary = typeof pt

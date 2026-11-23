@@ -23,6 +23,11 @@ export const navigation: NavSection[] = [
       { name: "Card", href: "/styleguide/components/card" },
       { name: "Container", href: "/styleguide/components/container" },
       {
+        name: "Cookie Consent",
+        href: "/styleguide/components/cookie-consent",
+      },
+      { name: "Dialog", href: "/styleguide/components/dialog" },
+      {
         name: "Image Placeholder",
         href: "/styleguide/components/image-placeholder",
       },
@@ -31,6 +36,7 @@ export const navigation: NavSection[] = [
         href: "/styleguide/components/navigation-menu",
       },
       { name: "Separator", href: "/styleguide/components/separator" },
+      { name: "Switch", href: "/styleguide/components/switch" },
       { name: "Table", href: "/styleguide/components/table" },
       { name: "Toggle Group", href: "/styleguide/components/toggle-group" },
       { name: "Tooltip", href: "/styleguide/components/tooltip" },

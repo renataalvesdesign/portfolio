@@ -10,7 +10,6 @@ export const site = {
   email: "renaataa.alves@hotmail.com",
   linkedinUrl: "https://www.linkedin.com/in/renaataalves/",
   resumeUrl: "#",
-  cookiePreferencesUrl: "#",
 }
 
 export const isPending = (url: string) => url === "#"
