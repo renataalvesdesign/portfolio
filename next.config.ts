@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
   output: "export",
   basePath,
   assetPrefix: basePath,
+  // Plain <a href> to files in public/ (e.g. the résumé) need the prefix too
+  env: { NEXT_PUBLIC_BASE_PATH: basePath },
   // GitHub Pages has no image optimization server
   images: { unoptimized: true },
 }

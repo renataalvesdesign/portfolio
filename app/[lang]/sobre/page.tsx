@@ -27,7 +27,7 @@ export default async function AboutPage() {
       key="hero"
       dict={dict.about.hero}
       profile={dict.hero}
-      resumePending={dict.links.resumePending}
+      locale={locale}
     />,
     <Competencies key="competencies" dict={dict.about.skills} />,
     // One continuous navy band: experience, then education

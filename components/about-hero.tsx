@@ -3,39 +3,22 @@ import { cn } from "cn"
 
 import { Button } from "@ds/components/ui/button"
 import { Container } from "@ds/components/ui/container"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@ds/components/ui/tooltip"
 import { PageHeading } from "@/components/page-heading"
 import type { Dictionary } from "@/dictionaries/pt"
+import type { Locale } from "@/lib/i18n"
 import { enter } from "@/lib/motion"
-import { isPending, site } from "@/lib/site"
+import { resume } from "@/lib/site"
 
 export function AboutHero({
   dict,
   profile,
-  resumePending,
+  locale,
 }: {
   dict: Dictionary["about"]["hero"]
   profile: Pick<Dictionary["hero"], "name" | "role">
-  resumePending: string
+  locale: Locale
 }) {
-  const pending = isPending(site.resumeUrl)
-
-  const resume = (
-    <Button asChild size="xl">
-      <a href={site.resumeUrl} download={pending ? undefined : true}>
-        {dict.resume}
-        <DownloadIcon
-          data-icon="inline-end"
-          aria-hidden
-          className="transition-transform group-hover/button:translate-y-0.5 group-focus-visible/button:translate-y-0.5 motion-reduce:transition-none"
-        />
-      </a>
-    </Button>
-  )
+  const file = resume[locale]
 
   return (
     <section id="top">
@@ -56,16 +39,16 @@ export function AboutHero({
             <p className="mt-1 text-lg font-medium">{profile.role}</p>
           </div>
           <div className="md:justify-self-end">
-            {pending ? (
-              // Same hint as the pending LinkedIn link: on hover and keyboard
-              // focus, announced as the link's description
-              <Tooltip>
-                <TooltipTrigger asChild>{resume}</TooltipTrigger>
-                <TooltipContent sideOffset={6}>{resumePending}</TooltipContent>
-              </Tooltip>
-            ) : (
-              resume
-            )}
+            <Button asChild size="xl">
+              <a href={file.url} download={file.file} type="application/pdf">
+                {dict.resume}
+                <DownloadIcon
+                  data-icon="inline-end"
+                  aria-hidden
+                  className="transition-transform group-hover/button:translate-y-0.5 group-focus-visible/button:translate-y-0.5 motion-reduce:transition-none"
+                />
+              </a>
+            </Button>
           </div>
         </div>
       </Container>

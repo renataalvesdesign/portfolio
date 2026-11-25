@@ -29,7 +29,6 @@ const pt = {
   links: {
     newTab: "(abre em nova aba)",
     linkedinPending: "O link do LinkedIn ainda não foi configurado.",
-    resumePending: "O arquivo do currículo ainda não foi configurado.",
   },
   nav: {
     label: "Navegação principal",
@@ -217,7 +216,7 @@ const pt = {
           summary:
             "Time de Contact Management: experiências para gerenciar, entender e ativar dados de clientes em ações de marketing.",
           description: [
-            "Projetei e evoluí as experiências de gestão de contatos, segmentação, importação de dados e tags, em parceria com Produto e Engenharia, conduzindo discovery e acompanhando churn para apoiar a priorização. Atuei além do meu time, facilitando um card sorting com os times de marketing para a evolução da navegação do RD Station Marketing e explorando experiências com IA no editor de Landing Pages. Fiz design review de entregas de outros designers e apoiei a evolução do Design System.",
+            "Projetei e evoluí as experiências de gestão de contatos, segmentação, importação de dados e tags, em parceria com Produto e Engenharia, conduzindo discovery e acompanhando churn para apoiar a priorização. Atuei além do meu time, facilitando um card sorting com os times de marketing para a evolução da navegação do RD Station Marketing e explorando experiências com IA no editor de Landing Pages. Fiz design review de entregas de outros designers, o onboarding de um designer recém-chegado, com acompanhamento das primeiras entregas, e apoiei a evolução do Design System.",
           ],
           cases: ["segmentacao-de-leads"],
           focus: [
@@ -275,7 +274,7 @@ const pt = {
           summary:
             "Squad de Canais, com foco em usabilidade, consistência e identidade de um produto conversacional.",
           description: [
-            "Identifiquei inconsistências de usabilidade e interação ao longo do produto, conduzi entrevistas e testes de usabilidade e padronizei componentes, navegação e terminologia, contribuindo para o Design System e a biblioteca no Figma. Atuei na interface de chat que facilita o atendimento da persona Atendente, indicando as conversas prioritárias e recentes, e usei NPS, churn e LTV para identificar oportunidades. Também participei de design reviews, de entrevistas de contratação e do onboarding de designer recém-chegado.",
+            "Identifiquei inconsistências de usabilidade e interação ao longo do produto, conduzi entrevistas e testes de usabilidade e padronizei componentes, navegação e terminologia, contribuindo para o Design System e a biblioteca no Figma. Atuei na interface de chat que facilita o atendimento da persona Atendente, indicando as conversas prioritárias e recentes, e usei NPS, churn e LTV para identificar oportunidades. Também participei de entrevistas de contratação de designers.",
           ],
           cases: [],
           focus: [

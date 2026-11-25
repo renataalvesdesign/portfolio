@@ -1,15 +1,27 @@
 import type { Locale } from "@/lib/i18n"
 
 // Data that does not change between languages.
-// TODO: replace the "#" placeholders once the final links are available
-// (resumeUrl → résumé file). Case links come from content/projects.
+// Case links come from content/projects.
 export const site = {
   // Public origin, for absolute URLs in share metadata (the base path is
   // added by Next to static asset URLs)
   url: "https://renataalvesdesign.github.io",
   email: "renaataa.alves@hotmail.com",
   linkedinUrl: "https://www.linkedin.com/in/renaataalves/",
-  resumeUrl: "#",
+}
+
+// Résumé PDFs in public/files, one per language. `file` is the name the
+// browser saves the download as.
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+export const resume: Record<Locale, { url: string; file: string }> = {
+  pt: {
+    url: `${basePath}/files/renata-alves-curriculo.pdf`,
+    file: "Curriculo - Renata Alves - Product Designer Senior.pdf",
+  },
+  en: {
+    url: `${basePath}/files/renata-alves-resume.pdf`,
+    file: "Resume - Renata Alves - Senior Product Designer.pdf",
+  },
 }
 
 export const isPending = (url: string) => url === "#"

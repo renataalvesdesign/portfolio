@@ -13,7 +13,6 @@ const en: Dictionary = {
   links: {
     newTab: "(opens in a new tab)",
     linkedinPending: "The LinkedIn link has not been set up yet.",
-    resumePending: "The résumé file has not been set up yet.",
   },
   nav: {
     label: "Main navigation",
@@ -199,7 +198,7 @@ const en: Dictionary = {
           summary:
             "Contact Management Team: Experiences for managing, understanding, and activating customer data to power marketing initiatives.",
           description: [
-            "I designed and evolved experiences for contact management, segmentation, data imports, and tags, partnering with Product and Engineering teams. I led discovery initiatives and monitored customer churn to inform prioritization. Beyond my team, I facilitated a card sorting exercise with Marketing teams to help improve RD Station Marketing's navigation and explored AI-powered experiences for the Landing Page editor. I also conducted design reviews of other designers' work and contributed to the evolution of the Design System.",
+            "I designed and evolved experiences for contact management, segmentation, data imports, and tags, partnering with Product and Engineering teams. I led discovery initiatives and monitored customer churn to inform prioritization. Beyond my team, I facilitated a card sorting exercise with Marketing teams to help improve RD Station Marketing's navigation and explored AI-powered experiences for the Landing Page editor. I also conducted design reviews of other designers' work, onboarded a new designer, supporting their first deliveries, and contributed to the evolution of the Design System.",
           ],
           cases: ["segmentacao-de-leads"],
           focus: [
@@ -257,7 +256,7 @@ const en: Dictionary = {
           summary:
             "Channels Squad: Focused on usability, consistency, and the product identity of a conversational platform.",
           description: [
-            "I identified usability and interaction inconsistencies across the product, conducted user interviews and usability tests, and standardized components, navigation, and terminology, contributing to the Design System and Figma library. I also worked on the chat interface designed to support customer service agents, helping them identify recent and high-priority conversations. I used NPS, churn, and LTV metrics to identify improvement opportunities. Additionally, I participated in design reviews, hiring interviews, and the onboarding of a new designer.",
+            "I identified usability and interaction inconsistencies across the product, conducted user interviews and usability tests, and standardized components, navigation, and terminology, contributing to the Design System and Figma library. I also worked on the chat interface designed to support customer service agents, helping them identify recent and high-priority conversations. I used NPS, churn, and LTV metrics to identify improvement opportunities. Additionally, I took part in designer hiring interviews.",
           ],
           cases: [],
           focus: [
